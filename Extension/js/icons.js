@@ -48,7 +48,7 @@ var icons = {
 		
 		var sections = 1, links = 1, href = 1, name = 0;
 		
-		document.querySelector('#right').innerHTML = "";
+		document.querySelector('#bookmarks').innerHTML = "";
 		
 		for (var i = 0; i < lim; i++) {
 			var tower = icons.towers[i];
@@ -85,7 +85,7 @@ var icons = {
 			
 			elem_t.innerHTML = inner;
 			
-			document.querySelector('#right').innerHTML += elem_t.innerHTML;
+			document.querySelector('#bookmarks').innerHTML += elem_t.innerHTML;
 			
 		}
 	}

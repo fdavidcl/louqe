@@ -1,7 +1,9 @@
 {
 	"content_security_policy": "script-src 'self' 'unsafe-eval' chrome-extension:// https://api.duckduckgo.com/; object-src 'self'",
 	"manifest_version": 2,
-	"name": "codename PONT",
+	"name": "louqe",
+	"description": "__MSG_extension_description__",
+	"default_locale": "en",
 	"permissions": [
 		"http://*/",
 		"https://*/", 

@@ -13,16 +13,20 @@ body {
 	padding: 0;
 	aheight: 100% !important;
 	padding-bottom: 20px;
-	overflow-y: auto;
+	overflow-y: scroll;
 	overflow-x: auto;
 	min-width: 100%;
+	
+	font-family: Open Sans, 'Open Sans', Segoe UI, Tahoma, Helvetica, Arial, sans-serif;
 	background: #b0b1b2;
+	abackground: url(http://www.mirrorsedge.com/img/ME_Wallpaper_16x9_1920x1080_01.jpg) center center fixed;
+	background: url(http://coolvibe.com/wp-content/uploads/2010/05/mirrorsedge.jpg) center center fixed;
+	background-size: 100% auto;
 	color: white;
-	font-family: PT Sans;
 	-webkit-transition: background .2s ease;
 }
 body.search_mode {
-	background: #505050;
+	
 }
 	body::-webkit-scrollbar {
 		width: 6px;
@@ -92,48 +96,41 @@ body.search_mode {
 	margin: 100px 120px 0;
 }
 	#left {
+		position: fixed;
+		left: 0;
+		top: 0;
+		bottom: 0;
+		width: 30%;
 		
+		background: rgba(0,0,0,0.5);
 	}
 		#search {
 		}
-			#search_input {
-				position: fixed;
-				top: 60px;
-				left: 120px;
-				right: 120px;
-				margin: -5px;
-				width: auto;
-				font-size: 1.8em;
-				box-shadow: 0 0 20px rgba(0,0,0,0.4);
-				border: 0px solid;
-				padding: 2px;
-				outline: none;
-				-webkit-transition: top .3s ease;
+			#search_form {
+				padding: 24px;
 			}
-			body:not(.search_mode) #search_input {
-				top: -200px;
+			
+			#search_input {
+				width: 100%;
+				
+				font-size: 1.2em;
+				font-family: Open Sans, 'Open Sans', Segoe UI, Tahoma, Helvetica, Arial, sans-serif;
+				outline: none;
 			}
 			#search [type="submit"] {
 				display: none;
 			}
 			#search_output {
 				overflow: hidden;
-				position: fixed;
-				left: 120px;
-				right: 50%;
-				width: auto;
-				opacity: 1;
-				-webkit-transition: margin .5s ease, opacity .5s ease;
 			}
 				#search_output .results a {
 					display: block;
-					margin-right: 10px;
 					color: white;
 					text-decoration: none;
-					padding: 4px 10px 4px 32px;
+					padding: 8px 24px 8px 56px;
 					background-size: 16px;
 					background-repeat: no-repeat;
-					background-position: 6px center;
+					background-position: 24px center;
 					overflow: hidden;
 					text-overflow: ellipsis;
 				}
@@ -147,18 +144,18 @@ body.search_mode {
 						color: #ccc;
 					}
 				#search_output .results a[href]:hover {
-					color: #ccc;
+					background-color: rgba(0,0,0,0.3);
 				}
 					#search_output .results a[href]:hover .url {
-						color: #aaa;
-						text-decoration: underline;
+						acolor: #aaa;
+						atext-decoration: underline;
 					}
-				#search_output .results a.highlight {
-					color: #5cf;
+				#search_output .results a[href].highlight {
+					background-color: #07a;
 				}
-					#search_output .results a.highlight .url {
-						color: #2ac;
-						text-decoration: underline;
+					#search_output .results a[href].highlight .url {
+						acolor: #2ac;
+						atext-decoration: underline;
 					}
 				#search_output #ddg_banner {
 					font-size: smaller;
@@ -168,7 +165,7 @@ body.search_mode {
 					color: #d0d0d0;
 				}
 				
-			body:not(.search_mode) #search_output {
+			body:not(.search_mode) #search_output, body:not(.search_mode) #instant_o {
 				opacity: 0;
 				height: 0;
 				overflow: hidden;
@@ -188,16 +185,6 @@ body.search_mode {
 			opacity: 0;
 			height: 0;
 			overflow: hidden;
-		}
-		body:not([class]) #liveinfo:before {
-			content: "(escribe para buscar)";
-			position: absolute;
-			top: -60px;
-			left: 0;
-			right: 0;
-			margin: 0 auto;
-			color: #d0d0d0;
-			font-size: 20px;
 		}
 			#liveinfo>a {
 				display: inline-block;
@@ -263,28 +250,54 @@ body.search_mode {
 				#liveinfo>a .title {
 					
 				}
-	#right {
-		width: 50%;
-		margin-left: 50%;
+#right {
+	position: absolute;
+	right: 0;
+	left: 30%;
+	top: 0;
+	min-height: 100%;
+	-webkit-transition: background .2s ease;
+}
+body.search_mode #right {
+	background: rgba(0,0,0,0.7);
+}
+	#instant_o a {
+		border: 1px solid gray;
+		padding: 10px;
+		margin: 20px 20px 0 30px;
+		display: block;
+		color: white;
+		text-decoration: none;
+		background-color: #30333a;
+		white-space: normal;
+	}
+	#instant_o a[style] {
+		padding-left: 36px;
+		background-position: 10px center;
+		background-repeat: no-repeat;
+	}
+	
+	#right #bookmarks {
+		padding: 20px;
 		overflow: hidden;
 		-webkit-transition: opacity .5s ease;
 		margin-top: 0;
 	}
-		#right h1 {
+		#right #bookmarks h1 {
 			margin: 0px 0 8px 10px;
 			padding: 2px 6px;
 			font-weight: normal;
 			font-size: 20px;
 			background: rgba(255,255,255,.3);
 		}
-		#right a + h1 {
+		#right #bookmarks a + h1 {
 			margin-top: 16px;
 		}
-		#right h3 {
+		#right #bookmarks h3 {
 			font-size: 16px;
 			margin: 12px 0 0 10px;
 		}
-		#right a {
+		#right #bookmarks a {
 			display: block;
 			margin: 6px 0 6px 10px;
 			padding-left: 24px;
@@ -296,10 +309,10 @@ body.search_mode {
 			overflow: hidden;
 			text-overflow: clip;
 		}
-		#right a:hover {
+		#right #bookmarks a:hover {
 			color: #ddd;
 		}
-	body:not(.search_mode) #right {
+	body:not(.search_mode) #right #bookmarks {
 		opacity: 0;
 		height: 0;
 		overflow: hidden;

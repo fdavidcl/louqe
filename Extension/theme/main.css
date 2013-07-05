@@ -1,0 +1,45 @@
+html {
+	
+}
+body {
+	margin: 0;
+	
+	font-family: Open Sans, 'Open Sans', Segoe UI, Tahoma, Helvetica, Arial, sans-serif;
+	background: url(http://www.mirrorsedge.com/img/ME_Wallpaper_16x9_1920x1080_01.jpg) center center fixed;
+	background: url(http://coolvibe.com/wp-content/uploads/2010/05/mirrorsedge.jpg) center center fixed;
+	background-size: 100% auto;
+}
+
+	#side {
+		position: fixed;
+		left: 0;
+		top: 0;
+		bottom: 0;
+		width: 19em;
+		
+		background: rgba(0,0,0,0.4);
+	}
+	
+		#search {
+			padding: 2em;
+		}
+		
+			#search input[type="search"] {
+				width: 100%;
+				
+				font-size: 1.2em;
+				font-family: Open Sans, 'Open Sans', Segoe UI, Tahoma, Helvetica, Arial, sans-serif;
+				outline: none;
+			}
+		
+		#results {
+			
+		}
+		
+		#groups {
+			
+		}
+	
+	#main {
+	
+	}
