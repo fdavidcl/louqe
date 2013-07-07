@@ -48,12 +48,12 @@ var icons = {
 		
 		var sections = 1, links = 1, href = 1, name = 0;
 		
-		document.querySelector('#bookmarks').innerHTML = "";
+		document.querySelector('#bookmarks').innerHTML = "<h1>Bookmarks</h1>";
 		
 		for (var i = 0; i < lim; i++) {
 			var tower = icons.towers[i];
 			var elem_t = document.createElement("div");
-			var inner = "<h1 id='tower_" + i + "'><span>" + tower[name] + "</span></h1>";
+			var inner = "<h2 id='tower_" + i + "'><span>" + tower[name] + "</span></h2>";
 			
 			var link_counter = 1;
 			var lim_sec = tower[sections].length;

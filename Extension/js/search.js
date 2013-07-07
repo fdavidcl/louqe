@@ -64,7 +64,7 @@ var search = {
 		if (orig_query != search.last_query) {
 			var sections = 1, links = 1, href = 1, name = 0;
 			
-			var regex = /^(http[s]?:\/\/|ftp:\/\/)?(localhost|([0-9A-Za-z-\.@:%_\+~#=])+((\.[A-Za-z][A-Za-z]+))+)([0-9A-Za-z-\.@:%_\+~#=\/])*$/;
+			var regex = /^(http[s]?:\/\/|ftp:\/\/)?(localhost|([0-9A-Za-z-\.@:%_\+~#=])+((\.[A-Za-z][A-Za-z]+))+)([0-9A-Za-z-\.?&*@:%_\+~#=\/])*$/;
 			var re = new RegExp(regex);
 			if (orig_query.match(re)) {
 				var link = orig_query;
@@ -80,10 +80,18 @@ var search = {
 
 			search.last_query = orig_query;
 			var query = document.querySelector('#search_form > input').value.toLowerCase().replace(/\)/g, '\\)').replace(/\(/g, '\\(');
+			
+			if (query.length > 0) {
+				// Using DuckduckGo Instant API to find answers
+				var ddg_rq = new AjaxRequest("http://api.duckduckgo.com/?q=" + encodeURIComponent(orig_query) + "&format=json", search.InsertDDG);
+				ddg_rq.Send();
+			}
+			
 			search.best = [];
 			var min_relev = -1;
 			
 			var removed_list = "";
+			var no_coincidences = true;
 			
 			for (var i = 0; i < icons.towers.length; i++) {
 				var this_tower = icons.towers[i];
@@ -189,10 +197,16 @@ var search = {
 				
 				if (!any_link_in_tower) {
 					removed_list += '#tower_'+i+', ';
+				} else {
+					no_coincidences = false;
 				}
 			}
 			
-			removed_list += "#dummy { display: none !important; }";
+			if (no_coincidences) {
+				removed_list += '#bookmarks>h1, ';
+			}
+			
+			removed_list += "dummy { display: none !important; }";
 			
 			if (!document.querySelector('#search_css')) {
 				var n_style = document.createElement('style');
@@ -207,10 +221,6 @@ var search = {
 				config.ChangeMode(config.modes.user);
 			} else {
 				config.ChangeMode(config.modes.search);
-				
-				// Query a DuckduckGo
-				var ddg_rq = new AjaxRequest("http://api.duckduckgo.com/?q=" + encodeURIComponent(orig_query) + "&format=json", search.InsertDDG);
-				ddg_rq.Send();
 			
 				// Mejores resultados de marcadores
 				var mejores = "";
@@ -236,7 +246,7 @@ var search = {
 			for (i in search.engines) {
 				engine = search.engines[i];
 				
-				search_html += '<a href="' + engine.url.left + encodeURIComponent(orig_query) + engine.url.right + '" style="background-image: url(' + engine.favicon + ')">Buscar en ' + engine.name + '</a>';
+				search_html += '<a href="' + engine.url.left + encodeURIComponent(orig_query) + engine.url.right + '" style="background-image: url(' + engine.favicon + ')" class="search-item"><i class="icon-search icon-small"></i>' + engine.name + '</a>';
 			}
 			
 			document.querySelector('#bookmarks_o').innerHTML = html_out;
@@ -251,17 +261,27 @@ var search = {
 		var def_link = false;
 		var ddgl = document.createElement('span');
 		
-		if (content.Results[0]) {
+		ddgl.innerHTML += '<h1>Answers</h1>';
+		
+		if (document.querySelector(".ddg-official-site")) {
+			document.querySelector(".ddg-official-site").parentNode.removeChild(document.querySelector(".ddg-official-site"));
+		}
+		
+		if (content.Results[0]) { 
 			var lin = content.Results[0];
 			var res = document.createElement('a');
 			res.innerHTML = lin.Text + "<span class='url'>" + lin.FirstURL + "</span>";
 			res.href = lin.FirstURL;
-			if (lin.Icon) {
+			if (lin.Icon && lin.Icon.URL.length > 0) {
 				res.style.backgroundImage = "url(" + lin.Icon.URL + ")";
 			}
 			
-			ddgl.appendChild(res);
-			resultado = true;
+			if (content.Type == "A") { // Official site - appears on the left panel, instead of the answers section
+				document.getElementById('go_o').appendChild(res);
+			} else {
+				ddgl.appendChild(res);
+				resultado = true;
+			}
 		}
 		if (content.Abstract != "") {
 			var abs = document.createElement('a');
@@ -273,7 +293,8 @@ var search = {
 			def_link = true;
 		}
 		if (content.Answer != "") {
-			var ans = document.createElement('a');
+			var ans = document.createElement('div');
+			ans.classList.add('answer');
 			//ans.innerHTML = content.Answer.split('">')[1].split('</a>')[0].replace(/,/g, "");
 			ans.innerHTML = content.Answer;
 			ddgl.appendChild(ans);
@@ -291,7 +312,7 @@ var search = {
 			def_link = true;
 		}
 		
-		ddgl.innerHTML += '';
+		ddgl.innerHTML += '<div id="ddg_banner">Instant answers provided by <a href="https://duckduckgo.com">DuckDuckGo</a>.</div>';
 		
 		if (resultado) {
 			document.querySelector('#instant_o').innerHTML = ddgl.innerHTML;

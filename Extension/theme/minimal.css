@@ -20,10 +20,10 @@ body {
 	font-family: Open Sans, 'Open Sans', Segoe UI, Tahoma, Helvetica, Arial, sans-serif;
 	background: #b0b1b2;
 	abackground: url(http://www.mirrorsedge.com/img/ME_Wallpaper_16x9_1920x1080_01.jpg) center center fixed;
-	background: url(http://coolvibe.com/wp-content/uploads/2010/05/mirrorsedge.jpg) center center fixed;
+	abackground: url(http://coolvibe.com/wp-content/uploads/2010/05/mirrorsedge.jpg) center center fixed;
+	background: url(http://artescritorio.com/wp-content/uploads/2012/06/wallpaper_01.jpg) center center fixed;
 	background-size: 100% auto;
 	color: white;
-	-webkit-transition: background .2s ease;
 }
 body.search_mode {
 	
@@ -38,6 +38,11 @@ body.search_mode {
 		border: solid #505050;
 		border-width: 0 2px;
 	}
+.icon-small {
+	font-weight: normal;
+	font-size: 12px;
+}
+
 #window_space {
 	height: 0;
 }
@@ -100,7 +105,7 @@ body.search_mode {
 		left: 0;
 		top: 0;
 		bottom: 0;
-		width: 30%;
+		width: 400px;
 		
 		background: rgba(0,0,0,0.5);
 	}
@@ -157,11 +162,17 @@ body.search_mode {
 						acolor: #2ac;
 						atext-decoration: underline;
 					}
-				#search_output #ddg_banner {
+				#search_output .results .search-item .icon-search {
+					margin-right: 1em;
+					margin-left: -2em;
+					text-shadow: 0 1px 1px black;
+				}
+				#ddg_banner {
 					font-size: smaller;
 					color: #d0d0d0;
+					margin: 10px 30px 0;
 				}
-				#search_output #ddg_banner a {
+				#ddg_banner a {
 					color: #d0d0d0;
 				}
 				
@@ -253,7 +264,7 @@ body.search_mode {
 #right {
 	position: absolute;
 	right: 0;
-	left: 30%;
+	left: 400px;
 	top: 0;
 	min-height: 100%;
 	-webkit-transition: background .2s ease;
@@ -261,34 +272,65 @@ body.search_mode {
 body.search_mode #right {
 	background: rgba(0,0,0,0.7);
 }
-	#instant_o a {
-		border: 1px solid gray;
-		padding: 10px;
-		margin: 20px 20px 0 30px;
-		display: block;
-		color: white;
-		text-decoration: none;
-		background-color: #30333a;
-		white-space: normal;
+	#right h1 {
+		font-weight: 300;
+		padding: 0 30px;
 	}
-	#instant_o a[style] {
-		padding-left: 36px;
-		background-position: 10px center;
-		background-repeat: no-repeat;
+	#bookmarks h1 {
+		padding: 0 10px;
 	}
+	
+	#instant_o {
+		-webkit-transition: opacity .2s ease, margin .2s ease;
+	}
+		#instant_o>a, #instant_o>.answer {
+			aborder: 1px solid gray;
+			padding: 10px;
+			margin: 20px 20px 0 30px;
+			display: block;
+			color: white;
+			text-decoration: none;
+			background-color: rgba(70,70,70,.6);
+			white-space: normal;
+		}
+		#instant_o>a[style], #instant_o>.answer[style] {
+			padding-left: 36px;
+			background-position: 10px center;
+			background-repeat: no-repeat;
+			background-size: 1em;
+		}
+			#instant_o>a .url, #instant_o>.answer .url {
+				margin-left: 1em;
+				opacity: .8;
+				font-size: smaller;
+			}
+			#instant_o>a .inlink_banner, #instant_o>.answer .inlink_banner {
+				display: block;
+				text-align: right;
+				clear: both;
+				opacity: .8;
+				font-size: smaller;
+			}
+			#instant_o>.answer a {
+				color: #c0daf0;
+				text-decoration: underline;
+			}
+			#instant_o>.answer a:hover {
+				text-decoration: none;
+			}
 	
 	#right #bookmarks {
 		padding: 20px;
 		overflow: hidden;
-		-webkit-transition: opacity .5s ease;
+		-webkit-transition: opacity .2s ease, margin .2s ease;
 		margin-top: 0;
 	}
-		#right #bookmarks h1 {
-			margin: 0px 0 8px 10px;
-			padding: 2px 6px;
+		#right #bookmarks h2 {
+			margin: 0px -20px 8px;
+			padding: 6px 30px;
 			font-weight: normal;
 			font-size: 20px;
-			background: rgba(255,255,255,.3);
+			background: rgba(40,44,56,.6);
 		}
 		#right #bookmarks a + h1 {
 			margin-top: 16px;
@@ -312,10 +354,12 @@ body.search_mode #right {
 		#right #bookmarks a:hover {
 			color: #ddd;
 		}
-	body:not(.search_mode) #right #bookmarks {
+	body:not(.search_mode) #right #bookmarks, body:not(.search_mode) #instant_o {
 		opacity: 0;
 		height: 0;
+		padding: 0;
 		overflow: hidden;
+		margin-left: -10px;
 	}
 
 #option_icons {
