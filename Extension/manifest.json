@@ -6,8 +6,7 @@
 	"default_locale": "en",
 	"permissions": [
 		"http://*/",
-		"https://*/", 
-		"tabs", 
+		"https://*/",
 		"storage", 
 		"unlimitedStorage", 
 		"chrome://favicon/",

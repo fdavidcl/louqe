@@ -223,8 +223,8 @@ var config = {
 		document.querySelector("body").className = mode;
 	},
 	LoadTheme: function() {
-		document.querySelector("#theme").href = localStorage.usertheme ?
-			localStorage.usertheme+"?_="+new Date().getTime() : "theme/metro_dark.css";
+		/* document.querySelector("#theme").href = localStorage.usertheme ?
+			localStorage.usertheme+"?_="+new Date().getTime() : "theme/metro_dark.css"; */
 	},
 	Load: function() {
 		config.LoadTheme();

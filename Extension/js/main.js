@@ -1,7 +1,7 @@
 
-/*** Esto se ejecuta instantáneamente, sin necesidad de cargar todos los scripts ***/
+/*** Esto se ejecuta instantáneamente, sin necesidad de cargar todos los scripts /
 document.querySelector("#theme").href = localStorage.usertheme ?
-	localStorage.usertheme : "theme/minimal.css";
+	localStorage.usertheme : "theme/minimal.css";**/
 
 /*** Prototipo para llamada Ajax ***/
 function AjaxRequest(url, callback) {
@@ -26,6 +26,46 @@ function AjaxRequest(url, callback) {
 		xmlhttp.open("GET", this.url, true);
 		xmlhttp.send();
 	}
+}
+
+/*** Prototipo de Module Handler ***/
+
+function ModuleHandler(module) {
+	this.module = module;
+	
+	var targetid = "results" + module.id;
+	var ans = document.createElement('span');
+	ans.id = "results" + module.id;
+	ans.className = "instant";
+	document.querySelector("#results").insertBefore(ans, document.querySelector("#bookmarks"));
+	
+	this.query = function(q) {
+		if (q != "") {
+			if (window.XMLHttpRequest) {
+				var xmlhttp = new XMLHttpRequest();
+			} else {
+				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+
+			xmlhttp.onreadystatechange = function() {
+				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+					var anshtml = "";
+					
+					if (xmlhttp.responseXML) {
+						anshtml = module.generateAnswer(xmlhttp.responseXML);
+					} else {
+						anshtml = module.generateAnswer(xmlhttp.responseText);
+					}
+					
+					ans.innerHTML = anshtml != "" ? ("<h1>" + module.name + "</h1>" + anshtml) : "";
+				}
+			};
+			xmlhttp.open("GET", module.url + q, true);
+			xmlhttp.send();
+		} else {
+			ans.innerHTML = "";
+		}
+	};
 }
 
 /*** Gestión de localStorage ***/

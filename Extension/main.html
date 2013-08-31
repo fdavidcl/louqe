@@ -5,13 +5,15 @@
 		
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="theme/font-awesome.min.css" />
-		<link rel="stylesheet" href="theme/minimal.css" id="theme" />
+		<link rel="stylesheet" href="theme/main.css" />
 		
 		<script type="text/javascript" src="js/main.js"></script>
 		<script type="text/javascript" src="js/bookmarks.js"></script>
 		<script type="text/javascript" src="js/icons.js"></script>
 		<script type="text/javascript" src="js/widgets.js"></script>
 		<script type="text/javascript" src="js/search.js"></script>
+		<script type="text/javascript" src="js/duckduckgo.js"></script>
+		<script type="text/javascript" src="js/flickr.js"></script>
 		<script type="text/javascript" src="js/config.js"></script>
 	</head>
 	<body>
@@ -22,35 +24,41 @@
 		-->
 		<div id="window_space"></div>
 		<div id="wrapper">
-			<section id="left">
+			<section id="side">
 				<div id="search">
 					<form id="search_form">
 						<input type="text" id="search_input" autocomplete="off" />
 						<input type="submit" />
 					</form>
 					<div id="search_output">
-						<div id="go_o" class="results"></div>
-						<div id="bookmarks_o" class="results"></div>
-						<div id="engines_o" class="results"></div>
-						<div id="related_o" class="results"></div>
+						<div id="go_o" class="instant"></div>
+						<div id="bookmarks_o" class="instant">
+							<!-- Most relevant bookmarks -->
+						</div>
+						<div id="engines_o" class="instant">
+							<!-- Search engines -->
+						</div>
+						<div id="related_o" class="instant">
+							<!-- Related queries -->
+						</div>
 					</div>
 				</div>
 			</section>
-			<div id="right">
-				<div id="liveinfo">
-					<!-- Los widgets se crean dinámicamente -->
-				</div>
-				<div id="instant_o" class="results">
-					
-				</div>
+			<section id="start">
+				<!-- Widgets: Clock, weather, direct links... -->
+				<a><span class="content">Hey!</span><span class="title">Test</span></a>
+			</section>
+			<section id="results">
 				<div id="bookmarks">
-					<!-- Los enlaces se crean dinámicamente -->
+					<!-- Filtered bookmarks -->
 				</div>
+			</section>
+		</div>
+		<div id="settings">
+			<div id="settings_launchers">
+				<a href="#config" id="edit_mode_button"><i class="icon-cog"></i></a>
+				<a href="#config" id="add_widget_button"><i class="icon-plus-sign"></i></a>
 			</div>
 		</div>
-		<footer id="option_icons">
-			<a href="#config" id="edit_mode_button"><i class="icon-cog"></i></a>
-			<a href="#config" id="add_widget_button"><i class="icon-plus-sign"></i></a>
-		</footer>
 	</body>
 </html>

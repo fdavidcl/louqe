@@ -53,6 +53,7 @@ var search = {
 			}
 		}
 	],
+	answers: {},
 	highlighted: -1,
 	last_query: "",
 	Display: function() {
@@ -81,10 +82,8 @@ var search = {
 			search.last_query = orig_query;
 			var query = document.querySelector('#search_form > input').value.toLowerCase().replace(/\)/g, '\\)').replace(/\(/g, '\\(');
 			
-			if (query.length > 0) {
-				// Using DuckduckGo Instant API to find answers
-				var ddg_rq = new AjaxRequest("http://api.duckduckgo.com/?q=" + encodeURIComponent(orig_query) + "&format=json", search.InsertDDG);
-				ddg_rq.Send();
+			for (var e in search.handlers) {
+				search.handlers[e].query(orig_query);
 			}
 			
 			search.best = [];
@@ -254,73 +253,8 @@ var search = {
 			search.HighlightItem(0);
 		}
 	},
-	InsertDDG: function(content) {
-		content = JSON.parse(content);
-		document.querySelector('#instant_o').innerHTML = "";
-		var resultado = false;
-		var def_link = false;
-		var ddgl = document.createElement('span');
-		
-		ddgl.innerHTML += '<h1>Answers</h1>';
-		
-		if (document.querySelector(".ddg-official-site")) {
-			document.querySelector(".ddg-official-site").parentNode.removeChild(document.querySelector(".ddg-official-site"));
-		}
-		
-		if (content.Results[0]) { 
-			var lin = content.Results[0];
-			var res = document.createElement('a');
-			res.innerHTML = lin.Text + "<span class='url'>" + lin.FirstURL + "</span>";
-			res.href = lin.FirstURL;
-			if (lin.Icon && lin.Icon.URL.length > 0) {
-				res.style.backgroundImage = "url(" + lin.Icon.URL + ")";
-			}
-			
-			if (content.Type == "A") { // Official site - appears on the left panel, instead of the answers section
-				document.getElementById('go_o').appendChild(res);
-			} else {
-				ddgl.appendChild(res);
-				resultado = true;
-			}
-		}
-		if (content.Abstract != "") {
-			var abs = document.createElement('a');
-			abs.innerHTML = content.Abstract + '<span class="inlink_banner">' + content.AbstractSource + '</span>';
-			abs.href = content.AbstractURL;
-			ddgl.appendChild(abs);
-			
-			resultado = true;
-			def_link = true;
-		}
-		if (content.Answer != "") {
-			var ans = document.createElement('div');
-			ans.classList.add('answer');
-			//ans.innerHTML = content.Answer.split('">')[1].split('</a>')[0].replace(/,/g, "");
-			ans.innerHTML = content.Answer;
-			ddgl.appendChild(ans);
-			
-			resultado = true;
-		}
-		if (content.Definition != "") {
-			var def = document.createElement('a');
-			def.innerHTML = content.Definition + '<span class="inlink_banner">' + content.DefinitionSource + '</span>';
-			if (content.DefinitionURL)
-				def.href = content.DefinitionURL;
-			ddgl.appendChild(def);
-			
-			resultado = true;
-			def_link = true;
-		}
-		
-		ddgl.innerHTML += '<div id="ddg_banner">Instant answers provided by <a href="https://duckduckgo.com">DuckDuckGo</a>.</div>';
-		
-		if (resultado) {
-			document.querySelector('#instant_o').innerHTML = ddgl.innerHTML;
-		}
-		search.HighlightItem(0);
-	},
 	HighlightItem: function(ind) {
-		var all_links = document.querySelectorAll("#search_output .results a[href]");
+		var all_links = document.querySelectorAll("#search_output .instant a[href]");
 		if (all_links[ind]) {
 			if (document.querySelector("#search_output a.highlight")) {
 				document.querySelector("#search_output a.highlight").classList.remove("highlight");
@@ -342,9 +276,9 @@ var search = {
 		}
 	},
 	FormSubmit: function() {
-		if (document.querySelector("#search_output .results a.highlight")) {
+		if (document.querySelector("#search_output .instant a.highlight")) {
 			event.preventDefault();
-			document.location.href = document.querySelector("#search_output .results a.highlight").href;
+			document.location.href = document.querySelector("#search_output .instant a.highlight").href;
 		} else {
 			return false;
 		}
@@ -357,5 +291,13 @@ var search = {
 		document.querySelector('#search_form > input').onkeyup = function() { search.Instant(); };
 		document.querySelector('#search_form > input').onkeydown = function() { search.HighlightByKey(); };
 		document.querySelector('#search_form').onsubmit = function() { search.FormSubmit(); };
+		
+		search.handlers = {};
+		
+		for (e in search.answers) {
+			var engine = search.answers[e];
+			engine.id = e;
+			search.handlers[e] = new ModuleHandler(engine);
+		}
 	}
 };

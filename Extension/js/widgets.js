@@ -219,7 +219,7 @@ var liveinfo = {
 	},
 	widgets: [],
 	Display: function() {
-		document.querySelector("#liveinfo").innerHTML = "";
+		document.querySelector("#start").innerHTML = "";
 		
 		for (var i = 0; i < this.widgets.length; i++) {
 			var dget = this.widgets[i];
@@ -238,7 +238,7 @@ var liveinfo = {
 			node.querySelector('.content').innerHTML = dget.content.front;
 			dget.content.back ? node.querySelector('.content+.content').innerHTML = dget.content.back : 0;
 			
-			document.querySelector("#liveinfo").appendChild(node);
+			document.querySelector("#start").appendChild(node);
 			
 			// Actualizamos contenido
 			if (dget.Update) {
@@ -254,7 +254,7 @@ var liveinfo = {
 		this.ActivaLiveTiles();
 	},
 	Load: function() {
-		try {
+		/*try {
 			var list = JSON.parse(Store("user_widgets"));
 			
 			for (widget in list) {
@@ -264,7 +264,7 @@ var liveinfo = {
 			console.log("Error al cargar widgets: " + err.message);
 		}
 		
-		this.Display();
+		this.Display();*/
 	},
 	UpdateWidget: function(indice) {
 		var icon = this.widgets[indice];

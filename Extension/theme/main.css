@@ -1,45 +1,406 @@
+* {
+
+}
 html {
-	
+	margin: 0;
+	padding: 0;
+	aheight: 100% !important;
+	min-width: 100%;
+	width: auto !important;
 }
 body {
 	margin: 0;
+	padding: 0;
+	aheight: 100% !important;
+	padding-bottom: 20px;
+	overflow-y: scroll;
+	overflow-x: auto;
+	min-width: 100%;
 	
 	font-family: Open Sans, 'Open Sans', Segoe UI, Tahoma, Helvetica, Arial, sans-serif;
-	background: url(http://www.mirrorsedge.com/img/ME_Wallpaper_16x9_1920x1080_01.jpg) center center fixed;
-	background: url(http://coolvibe.com/wp-content/uploads/2010/05/mirrorsedge.jpg) center center fixed;
-	background-size: 100% auto;
+	background: #b0b1b2;
+	abackground: url(http://www.mirrorsedge.com/img/ME_Wallpaper_16x9_1920x1080_01.jpg) center center fixed;
+	abackground: url(http://coolvibe.com/wp-content/uploads/2010/05/mirrorsedge.jpg) center center fixed;
+	background: url(http://artescritorio.com/wp-content/uploads/2012/06/wallpaper_01.jpg) center center fixed;
+	background-color: black;
+	background-size: cover;
+	color: white;
+}
+body.search_mode {
+	
+}
+	body::-webkit-scrollbar {
+		width: 6px;
+		height: 6px;
+		background: #505050;
+	}
+	body::-webkit-scrollbar-thumb {
+		background: #b0b1b2;
+		border: solid #505050;
+		border-width: 0 2px;
+	}
+.icon-small {
+	font-weight: normal;
+	font-size: 12px;
 }
 
+#window_space {
+	height: 0;
+}
+	.window {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 3;
+		background: rgba(0,0,0,0.6);
+	}
+		.window > div {
+			position: fixed;
+			top: 60px;
+			left: 0;
+			right: 0;
+			margin: 0 auto;
+			padding: 20px;
+			border: 1px solid #555;
+			background: #333;
+			box-shadow: 0 0 20px rgba(0,0,0,0.6);
+		}
+			.window > div header {
+				background: #555;
+				margin: -20px -20px 10px;
+				padding: 10px 20px;
+				font-size: 14px;
+			}
+			.window > div .options {
+				display: block;
+				margin-bottom: 10px;
+			}
+				.window .options a {
+					display: block;
+					color: white;
+					text-decoration: none;
+					margin: 10px 0;
+				}
+		.window .buttons {
+			margin-top: 10px;
+		}
+			.window .buttons a {
+				cursor: pointer;
+				background: #555;
+				padding: 3px 10px 4px;
+				margin-right: 10px;
+			}
+			.window .buttons a:hover {
+				background: #505050;
+				color: #e0e0e0;
+				box-shadow: 0 0 5px rgba(0,0,0,.4);
+			}
+#wrapper {
+
+}
 	#side {
 		position: fixed;
 		left: 0;
 		top: 0;
-		bottom: 0;
-		width: 19em;
+		bottom: 16px;
+		width: 400px;
 		
-		background: rgba(0,0,0,0.4);
+		background: rgba(0,0,0,0.5);
 	}
-	
+	body.search_mode #side {
+		bottom: 0;
+	}
 		#search {
-			padding: 2em;
 		}
-		
-			#search input[type="search"] {
+			#search_form {
+				padding: 24px;
+			}
+			
+			#search_input {
 				width: 100%;
 				
 				font-size: 1.2em;
 				font-family: Open Sans, 'Open Sans', Segoe UI, Tahoma, Helvetica, Arial, sans-serif;
 				outline: none;
 			}
-		
-		#results {
-			
+			#search [type="submit"] {
+				display: none;
+			}
+			#search_output {
+				overflow: hidden;
+			}
+				#search_output .instant a {
+					display: block;
+					color: white;
+					text-decoration: none;
+					padding: 8px 24px 8px 56px;
+					background-size: 16px;
+					background-repeat: no-repeat;
+					background-position: 24px center;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+				}
+					#search_output .instant a .from {
+						font-size: smaller;
+						color: #aaa;
+					}
+					#search_output .instant a .url {
+						display: block;
+						font-size: smaller;
+						color: #ccc;
+					}
+				#search_output .instant a[href]:hover {
+					background-color: rgba(0,0,0,0.3);
+				}
+					#search_output .instant a[href]:hover .url {
+						acolor: #aaa;
+						atext-decoration: underline;
+					}
+				#search_output .instant a[href].highlight {
+					background-color: #07a;
+				}
+					#search_output .instant a[href].highlight .url {
+						acolor: #2ac;
+						atext-decoration: underline;
+					}
+				#search_output .instant .search-item .icon-search {
+					margin-right: 1em;
+					margin-left: -2em;
+					text-shadow: 0 1px 1px black;
+				}
+				#ddg_banner {
+					font-size: smaller;
+					color: #d0d0d0;
+					margin: 10px 30px 0;
+				}
+				#ddg_banner a {
+					color: #d0d0d0;
+				}
+				
+			body:not(.search_mode) #search_output, body:not(.search_mode) #results .instant {
+				opacity: 0;
+				height: 0;
+				overflow: hidden;
+			}
+		#start {
+			position: absolute;
+			top: 0;
+			left: 400px;
+			right: 0;
+			bottom: 16px;
+			padding: 0 120px;
+			margin: 0 auto 0;
+			text-align: center;
+			-webkit-perspective: 1720;
+			-webkit-transition: opacity .5s ease;
 		}
-		
-		#groups {
-			
+		body.search_mode #start {
+			opacity: 0;
+			height: 0;
+			overflow: hidden;
 		}
+			#start>a {
+				display: inline-block;
+				width: 120px;
+				height: 110px;
+				border: 10px solid transparent;
+				margin: 0 5px;
+				text-align: left;
+				color: white;
+				text-decoration: none;
+				overflow: hidden;
+				background: rgba(0,0,0,0.15);
+				abox-shadow: inset 0 1px 1px -1px rgba(255,255,255,.2), 0 1px 1px -1px rgba(255,255,255,.2), inset 0 -1px 1px -1px rgba(0,0,0,.3), 0 -1px 1px -1px rgba(0,0,0,.3);
+				aborder: 1px solid rgba(0,0,0,0.12);
+			}
+				#start>a .small {
+					font-size: 16px;
+				}
+				#start>a .content {
+					font-size: 24px;
+					height: 90px;
+					overflow: hidden;
+					display: inline-block;
+					width: 100%;
+				}
+				#start>a.live, #start>a.live .title {
+					animation: livetile 10s infinite ease;
+					-webkit-animation: livetile 10s infinite ease;
+				}
+				#start>a.live .content:first-child {
+					animation: livetile2 10s infinite;
+					-o-animation: livetile2 10s infinite;
+					-ms-animation: livetile2 10s infinite;
+					-moz-animation: livetile2 10s infinite;
+					-webkit-animation: livetile2 10s infinite ease;
+				}
+				#start>a.prelive .content+.content {
+					display: none;
+				}
+				#start>a.live .content+.content {
+					/*animation: livetile1 10s infinite;
+					-o-animation: livetile1 10s infinite;
+					-ms-animation: livetile1 10s infinite;
+					-moz-animation: livetile1 10s infinite;
+					-webkit-animation: livetile1 10s infinite;*/
+					width: 100%;
+					-webkit-transform: rotateX(180deg);
+				}
+@-webkit-keyframes livetile {
+	0% { -webkit-transform: rotateX(0deg); }
+	5% { -webkit-transform: rotateX(-180deg); }
+	50% { -webkit-transform: rotateX(-180deg); }
+	55% { -webkit-transform: rotateX(0deg); }
+	100% { -webkit-transform: rotateX(0deg); }
+}
+@-webkit-keyframes livetile2 {
+	2.0% { margin-left: 0;  }
+	2.01% { margin-left: -100%; }
+	52.0% { margin-left: -100%; }
+	52.01% { margin-left: 0; }
+	100% { margin-left: 0; }
+}
+				#start>a .title {
+					
+				}
+#results {
+	position: absolute;
+	right: 0;
+	left: 400px;
+	top: 0;
+	min-height: 100%;
+	-webkit-transition: background .2s ease;
+}
+body.search_mode #results {
+	background: rgba(0,0,0,0.7);
+}
+	#results h1 {
+		font-weight: 300;
+		padding: 0 30px;
+	}
+	#bookmarks h1 {
+		padding: 0 10px;
+	}
 	
-	#main {
+	/** Duckduckgo, Flickr... **/
+	#results .instant {
+		-webkit-transition: opacity .2s ease, margin .2s ease;
+	}
+		#results .instant>a, #results .instant>.answer {
+			aborder: 1px solid gray;
+			padding: 10px;
+			margin: 20px 20px 0 30px;
+			display: block;
+			color: white;
+			text-decoration: none;
+			background-color: rgba(70,70,70,.6);
+			white-space: normal;
+		}
+		#results .instant>a[style], #results .instant>.answer[style] {
+			padding-left: 36px;
+			background-position: 10px center;
+			background-repeat: no-repeat;
+			background-size: 1em;
+		}
+			#results .instant>a .url, #results .instant>.answer .url {
+				margin-left: 1em;
+				opacity: .8;
+				font-size: smaller;
+			}
+			#results .instant>a .inlink_banner, #results .instant>.answer .inlink_banner {
+				display: block;
+				text-align: right;
+				clear: both;
+				opacity: .8;
+				font-size: smaller;
+			}
+			#results .instant>.answer a {
+				color: #c0daf0;
+				text-decoration: underline;
+			}
+			#results .instant>.answer a:hover {
+				text-decoration: none;
+			}
+		#results .instant > .photo-ribbon {
+			margin: 0 20px 10px 30px;
+		}
+			#results .instant > .photo-ribbon .photo {
+				display: inline-block;
+				vertical-align: top;
+				font-size: 12px;
+				margin: 5px;
+				width: 80px;
+				height: auto;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
+				#results .instant > .photo-ribbon .photo img {
+					width: 80px;
+					height: 80px;
+					background: #666;
+				}
+				#results .instant > .photo-ribbon .photo a {
+					color: white;
+				}
+		
 	
+	#results #bookmarks {
+		padding: 20px;
+		overflow: hidden;
+		-webkit-transition: opacity .2s ease, margin .2s ease;
+		margin-top: 0;
+	}
+		#results #bookmarks h2 {
+			margin: 0px -20px 8px;
+			padding: 6px 30px;
+			font-weight: normal;
+			font-size: 20px;
+			background: rgba(40,44,56,.6);
+		}
+		#results #bookmarks a + h1 {
+			margin-top: 16px;
+		}
+		#results #bookmarks h3 {
+			font-size: 16px;
+			margin: 12px 0 0 10px;
+		}
+		#results #bookmarks a {
+			display: block;
+			margin: 6px 0 6px 10px;
+			padding-left: 24px;
+			background-size: 16px;
+			background-repeat: no-repeat;
+			background-position: 2px center;
+			color: white;
+			text-decoration: none;
+			overflow: hidden;
+			text-overflow: clip;
+		}
+		#results #bookmarks a:hover {
+			color: #ddd;
+		}
+	body:not(.search_mode) #results #bookmarks, body:not(.search_mode) #results .instant {
+		opacity: 0;
+		height: 0;
+		padding: 0;
+		overflow: hidden;
+		margin-left: -10px;
+	}
+
+#settings_launchers {
+	position: fixed;
+	right: 0;
+	bottom: 0;
+}
+	#settings_launchers a {
+		color: white;
+		text-decoration: none;
+		font-size: smaller;
+	}
+	#settings_launchers a i {
+		margin-right: .3em;
 	}
