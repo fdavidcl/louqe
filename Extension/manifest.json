@@ -1,5 +1,5 @@
 {
-	"content_security_policy": "script-src 'self' 'unsafe-eval' chrome-extension:// https://api.duckduckgo.com/; object-src 'self'",
+	"content_security_policy": "script-src 'self' 'unsafe-eval' chrome-extension:// https://api.duckduckgo.com/ https://ajax.googleapis.com/ https://raw.github.com/louqe/; object-src 'self'",
 	"manifest_version": 2,
 	"name": "louqe",
 	"description": "__MSG_extension_description__",
