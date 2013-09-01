@@ -191,11 +191,10 @@ body.search_mode {
 			}
 		#start {
 			position: absolute;
-			top: 0;
-			left: 400px;
+			top: 80px;
+			left: 0;
 			right: 0;
 			bottom: 16px;
-			padding: 0 120px;
 			margin: 0 auto 0;
 			text-align: center;
 			-webkit-perspective: 1720;
@@ -212,6 +211,7 @@ body.search_mode {
 				position: fixed;
 				bottom: 20px;
 				right: 20px;
+				z-index: 0;
 				
 				text-align: right;
 			}
@@ -236,10 +236,25 @@ body.search_mode {
 				#start_clock .time .hour {
 					font-weight: bold;
 				}
-			#start>a {
+			#start #speeddial:before {
+				content: '';
+				display: inline-block;
+				height: 100%; 
+				vertical-align: middle;
+				margin-right: -0.25em; /* Adjusts for spacing */
+			}
+			#start #speeddial {
+				text-align: center;
+				width: 100%;
+				height: 100%;
+			}
+			#start #speeddial #dial_container {
+				display: inline-block;
+			}
+			#start #speeddial a {
 				display: inline-block;
 				width: 120px;
-				height: 110px;
+				height: 120px;
 				border: 10px solid transparent;
 				margin: 0 5px;
 				text-align: left;
@@ -250,55 +265,22 @@ body.search_mode {
 				abox-shadow: inset 0 1px 1px -1px rgba(255,255,255,.2), 0 1px 1px -1px rgba(255,255,255,.2), inset 0 -1px 1px -1px rgba(0,0,0,.3), 0 -1px 1px -1px rgba(0,0,0,.3);
 				aborder: 1px solid rgba(0,0,0,0.12);
 			}
-				#start>a .small {
+				#start #speeddial a .small {
 					font-size: 16px;
 				}
-				#start>a .content {
+				#start #speeddial a .content {
 					font-size: 24px;
 					height: 90px;
 					overflow: hidden;
 					display: inline-block;
 					width: 100%;
 				}
-				#start>a.live, #start>a.live .title {
-					animation: livetile 10s infinite ease;
-					-webkit-animation: livetile 10s infinite ease;
+				#start #speeddial a .title {
+					font-size: 14px;
+					vertical-align: top;
 				}
-				#start>a.live .content:first-child {
-					animation: livetile2 10s infinite;
-					-o-animation: livetile2 10s infinite;
-					-ms-animation: livetile2 10s infinite;
-					-moz-animation: livetile2 10s infinite;
-					-webkit-animation: livetile2 10s infinite ease;
-				}
-				#start>a.prelive .content+.content {
-					display: none;
-				}
-				#start>a.live .content+.content {
-					/*animation: livetile1 10s infinite;
-					-o-animation: livetile1 10s infinite;
-					-ms-animation: livetile1 10s infinite;
-					-moz-animation: livetile1 10s infinite;
-					-webkit-animation: livetile1 10s infinite;*/
-					width: 100%;
-					-webkit-transform: rotateX(180deg);
-				}
-@-webkit-keyframes livetile {
-	0% { -webkit-transform: rotateX(0deg); }
-	5% { -webkit-transform: rotateX(-180deg); }
-	50% { -webkit-transform: rotateX(-180deg); }
-	55% { -webkit-transform: rotateX(0deg); }
-	100% { -webkit-transform: rotateX(0deg); }
-}
-@-webkit-keyframes livetile2 {
-	2.0% { margin-left: 0;  }
-	2.01% { margin-left: -100%; }
-	52.0% { margin-left: -100%; }
-	52.01% { margin-left: 0; }
-	100% { margin-left: 0; }
-}
-				#start>a .title {
-					
+				#start #speeddial a img {
+					-webkit-filter: saturation(0);
 				}
 #results {
 	position: absolute;
