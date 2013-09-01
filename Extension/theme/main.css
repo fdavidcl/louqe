@@ -123,6 +123,11 @@ body.search_mode {
 				font-size: 1.2em;
 				font-family: Open Sans, 'Open Sans', Segoe UI, Tahoma, Helvetica, Arial, sans-serif;
 				outline: none;
+				opacity: .4;
+				-webkit-transition: opacity .2s ease;
+			}
+			body.search_mode #search_input {
+				opacity: 1;
 			}
 			#search [type="submit"] {
 				display: none;
@@ -195,12 +200,42 @@ body.search_mode {
 			text-align: center;
 			-webkit-perspective: 1720;
 			-webkit-transition: opacity .5s ease;
+			z-index: 10;
 		}
 		body.search_mode #start {
 			opacity: 0;
 			height: 0;
 			overflow: hidden;
+			z-index: 0;
 		}
+			#start_clock {
+				position: fixed;
+				bottom: 20px;
+				right: 20px;
+				
+				text-align: right;
+			}
+				#start_clock .date {
+					display: block;
+					
+					font-size: 13px;
+					font-weight: bold;
+					text-transform: uppercase;
+					color: rgba(255,255,255,.7);
+				}
+				#start_clock .time {
+					display: block;
+					
+					font-size: 120px;
+					color: rgba(255,255,255,.3);
+					font-weight: 300;
+					line-height: 80%;
+					letter-spacing: -4px;
+					text-align: right;
+				}
+				#start_clock .time .hour {
+					font-weight: bold;
+				}
 			#start>a {
 				display: inline-block;
 				width: 120px;

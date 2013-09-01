@@ -232,7 +232,7 @@ var search = {
 							enl.href = "http://" + enl.href;
 						}
 						
-						mejores += '<a href="' + enl.href + '" style="background-image: url(chrome://favicon/' + enl.href + ')">' + enl.name + '<span class="from"> en ' + enl.from + '</span><span class="url">' + enl.href + '</span></a>';
+						mejores += '<a href="' + enl.href + '" style="background-image: url(chrome://favicon/' + enl.href + ')">' + enl.name + '<span class="from"> in ' + enl.from + '</span><span class="url">' + enl.href + '</span></a>';
 					}
 				}
 				

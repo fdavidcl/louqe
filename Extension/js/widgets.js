@@ -12,6 +12,46 @@
 	Integración de notificaciones sociales con iSocial
  */
 
+var start = {
+	clock: {
+		update: function() {
+			var ampm = "";
+			var date = new Date();
+			//var dias = ["dom", "lun", "mar", "mie", "jue", "vie", "sab"];
+			var days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+			//var months = ["enero", "febrero", "marzo", 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+			var months = ["january", "february", "march", 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
+			
+			var hour = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
+			if (localStorage.ampm == "true") {
+				ampm = "AM";
+				
+				if (hour > 12) {
+					hour = hour - 12;
+					ampm = "PM";
+				} else if (hour == 0) {
+					hour = 12;
+				}
+			}
+			var mins = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
+			
+			this.node.querySelector('.date').innerHTML = days[date.getDay()] + " " + date.getDate() + " " + months[date.getMonth()];
+			this.node.querySelector('.time').innerHTML = '<span class="hour">' + hour + "</span>:<span class='mins'>" + mins + "</span>" + ampm;
+		},
+		load: function() {
+			var node = this.node = document.createElement('div');
+			node.id = "start_clock";
+			node.innerHTML = '<span class="date"></span><span class="time"></span>';
+			document.getElementById("start").appendChild(node);
+			start.clock.update();
+			this.interval = setInterval(function(){ start.clock.update() }, 1000);
+		}
+	},
+	load: function() {
+		this.clock.load();
+	}
+};
+
 
 var traduccion_weather = [
 	"tornado",

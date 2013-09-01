@@ -77,7 +77,8 @@ function Store(key, value) {
 /*** Activamos funcionalidades ***/
 window.onload = function() {
 	search.Load();
-	liveinfo.Load();
+	//liveinfo.Load();
+	start.load();
 	icons.Load();
 	config.Load();
 	bookmarks.LoadImport(); // Actualizamos marcadores silenciosamente
