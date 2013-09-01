@@ -292,21 +292,12 @@ var search = {
 		document.querySelector('#search_form > input').onkeydown = function() { search.HighlightByKey(); };
 		document.querySelector('#search_form').onsubmit = function() { search.FormSubmit(); };
 		
-		var extensions = ["flickr", "duckduckgo"];
 		search.handlers = {};
 		
-		/*for (var e in search.answers) {
+		for (var e in search.answers) {
 			var engine = search.answers[e];
 			engine.id = e;
 			search.handlers[e] = new ModuleHandler(engine);
-		}*/
-		
-		for (var e in extensions) {
-			$.getJSON("https://raw.github.com/louqe/louqe/master/extensions/" + extensions[e] + ".json", function(data) {
-				
-				search.handlers[e] = new ModuleHandler(data);
-				console.log(ext);
-			});
 		}
 	}
 };

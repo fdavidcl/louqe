@@ -22,6 +22,6 @@ search.answers.flickr = {
 		
 		cont += "</div>";
 		
-		return cont;
+		return response.photos.photo.length > 0 ? cont : "";
 	}
 };

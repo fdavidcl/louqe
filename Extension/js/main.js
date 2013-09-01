@@ -1,8 +1,4 @@
 
-/*** Esto se ejecuta instantáneamente, sin necesidad de cargar todos los scripts /
-document.querySelector("#theme").href = localStorage.usertheme ?
-	localStorage.usertheme : "theme/minimal.css";**/
-
 /*** Prototipo para llamada Ajax ***/
 function AjaxRequest(url, callback) {
 	this.url = url;

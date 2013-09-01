@@ -58,6 +58,6 @@ search.answers.duckduckgo = {
 		
 		ddgl.innerHTML += '<div id="ddg_banner">Instant answers provided by <a href="https://duckduckgo.com">DuckDuckGo</a>.</div>';
 		
-		return ddgl.innerHTML;
+		return resultado ? ddgl.innerHTML : "";
 	}
 };
