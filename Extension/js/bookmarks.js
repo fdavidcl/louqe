@@ -12,10 +12,6 @@
 /*
  * BUGS
  * TODO
-	Dar al usuario la posibilidad de ocultar torres, convertir una
-	carpeta de marcadores en una o varias torres.
-	o bien
-	Favoritos: Mostrar únicamente los marcadores preferidos por el usuario.
  */
  
 var bookmarks = {
@@ -118,7 +114,7 @@ var bookmarks = {
 		
 		tower_list = bar_hierarchy.concat(other_hierarchy, mobile_hierarchy);
 		
-		Store("towersData", JSON.stringify(tower_list));
+		_("towersData", JSON.stringify(tower_list));
 	},
 	LoadImport: function() {
 		/* Opciones para mostrar las carpetas como torres o agruparlas en una sola */
@@ -129,5 +125,63 @@ var bookmarks = {
 		chrome.bookmarks.getTree(function(resp) {
 			bookmarks.Import(resp[0], expand_bar_folders, expand_other_folders, expand_mobile_folders);
 		});
+	},
+	Load: function() {
+		if (localStorage.towersData) {
+			this.towers = JSON.parse(localStorage.towersData);
+		} else {
+			this.towers = [];
+		}
+		
+		this.Display();
+		this.LoadImport();
+	},
+	Display: function() {
+		var lim = this.towers.length;
+		
+		var sections = 1, links = 1, href = 1, name = 0;
+		
+		var bkhtml = "<h1>Bookmarks</h1>";
+		
+		for (var i = 0; i < lim; i++) {
+			var tower = this.towers[i];
+			var elem_t = document.createElement("div");
+			var inner = "<h2 id='tower_" + i + "'><span>" + tower[name] + "</span></h2>";
+			
+			var link_counter = 1;
+			var lim_sec = tower[sections].length;
+			for (var j = 0; j < lim_sec; j++) {
+				var section = tower[sections][j];
+				
+				if (section[name] && section[name] != "") {
+					inner += "<h3 id='section_" + i + "_" + j + "'>" + section[name] + "</h3>";
+					link_counter++;
+				}
+				
+				var quantity = section[links].length;
+				for (var k = 0; k < quantity; k++) {
+					var link = section[links][k];
+					var l_elem = document.createElement('a');
+					l_elem.className = 'bm';
+					l_elem.id = "l" + i + "_" + j + "_" + k;
+					l_elem.href = link[href];
+					l_elem.style.backgroundImage = "url(chrome://favicon/" + link[href] + ")";
+					l_elem.innerHTML = link[name];
+					var dummy = document.createElement('div');
+					dummy.appendChild(l_elem);
+					
+					inner += dummy.innerHTML;
+					
+					link_counter++;
+				}
+			}
+			
+			elem_t.innerHTML = inner;
+			
+			bkhtml += elem_t.innerHTML;
+			
+		}
+		
+		document.querySelector('#bookmarks').innerHTML = bkhtml;
 	}
 };

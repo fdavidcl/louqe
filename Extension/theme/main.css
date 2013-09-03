@@ -18,9 +18,8 @@ body {
 	min-width: 100%;
 	
 	font-family: Open Sans, 'Open Sans', Segoe UI, Tahoma, Helvetica, Arial, sans-serif;
-	background: #b0b1b2;
 	background: url("../back/luminance.jpg") center center fixed;
-	background-color: black;
+	background-color: #666;
 	background-size: cover;
 	color: white;
 }
@@ -41,6 +40,31 @@ body.search_mode {
 	font-weight: normal;
 	font-size: 12px;
 }
+.hide {
+	display: none;
+}
+
+.button {
+	display: inline-block;
+	padding: 6px 10px;
+	
+	font-size: 14px;
+	border: 2px solid white;
+	background: #07a;
+	color: white;
+	text-decoration: none;
+	cursor: default;
+	-webkit-transition: background .08s ease;
+}
+.button:hover {
+	background: #004766;
+}
+.button:active {
+	background: #008fcc;
+}
+	.button i {
+		margin-right: .6em;
+	}
 
 #window_space {
 	height: 0;
@@ -95,20 +119,26 @@ body.search_mode {
 				color: #e0e0e0;
 				box-shadow: 0 0 5px rgba(0,0,0,.4);
 			}
-#wrapper {
-
+.wrapper {
+	display: none;
 }
-	#side {
+.wrapper.displayed {
+	display: block;
+}
+	.side {
 		position: fixed;
 		left: 0;
 		top: 0;
-		bottom: 16px;
+		bottom: 0;
 		width: 400px;
 		
+		background: rgba(0,0,0,0.45);
 		-webkit-transition: background .2s ease;
 	}
-	body.search_mode #side {
-		bottom: 0;
+	#main .side {
+		background: transparent;
+	}
+	body.search_mode #main .side {
 		background: rgba(0,0,0,0.45);
 	}
 		#search {
@@ -126,16 +156,19 @@ body.search_mode {
 				opacity: .4;
 				-webkit-transition: opacity .2s ease;
 			}
-			body.search_mode #search_input {
+			body.search_mode #search_input, #search_input:hover {
 				opacity: 1;
 			}
-			#search [type="submit"] {
+			#search_form [type="submit"] {
 				display: none;
 			}
-			#search_output {
+			.side .options {
 				overflow: hidden;
 			}
-				#search_output .instant a {
+			.side .options:first-child {
+				padding-top: 20px;
+			}
+				.side .options a {
 					display: block;
 					color: white;
 					text-decoration: none;
@@ -147,66 +180,86 @@ body.search_mode {
 					text-overflow: ellipsis;
 					white-space: nowrap;
 				}
-					#search_output .instant a .from {
+					.side .options a .from {
 						font-size: smaller;
 						color: #aaa;
 					}
-					#search_output .instant a .url {
+					.side .options a .url {
 						display: block;
 						font-size: smaller;
 						color: #ccc;
 					}
-				#search_output .instant a[href]:hover {
+				.side .options a[href]:hover {
 					background-color: rgba(0,0,0,0.3);
 				}
-					#search_output .instant a[href]:hover .url {
+					.side .options a[href]:hover .url {
 						acolor: #aaa;
 						atext-decoration: underline;
 					}
-				#search_output .instant a[href].highlight {
+				.side .options a[href].highlight {
 					background-color: #07a;
 				}
-					#search_output .instant a[href].highlight .url {
+					.side .options a[href].highlight .url {
 						acolor: #2ac;
 						atext-decoration: underline;
 					}
-				#search_output .instant .search-item .icon-search {
+				.side .options a i {
+					display: inline-block;
+					width: 1em;
 					margin-right: 1em;
 					margin-left: -2em;
+					
+					text-align: center;
 					text-shadow: 0 1px 1px black;
 				}
 				#ddg_banner {
 					font-size: smaller;
 					color: #d0d0d0;
-					margin: 10px 30px 0;
+					margin: 10px 0 0;
 				}
 				#ddg_banner a {
 					color: #d0d0d0;
 				}
 				
-			body:not(.search_mode) #search_output, body:not(.search_mode) #results .instant {
+			body:not(.search_mode) #search_output, body:not(.search_mode) #search_results .instant {
 				opacity: 0;
 				height: 0;
 				overflow: hidden;
 			}
-		#start {
+		.start {
 			position: absolute;
 			top: 80px;
 			left: 0;
 			right: 0;
-			bottom: 16px;
+			bottom: 0;
 			margin: 0 auto 0;
 			text-align: center;
 			-webkit-perspective: 1720;
 			-webkit-transition: opacity .5s ease;
 			z-index: 10;
 		}
-		body.search_mode #start {
+		body.search_mode .start {
 			opacity: 0;
 			height: 0;
 			overflow: hidden;
 			z-index: 0;
 		}
+			#settings_launcher {
+				position: fixed;
+				right: 20px;
+				top: -60px;
+				padding: 4px 10px;
+				
+				font-size: 20px;
+				color: white;
+				opacity: 0.4;
+				text-decoration: none;
+				-webkit-transition: opacity .1s ease;
+			}
+			#settings_launcher:hover {
+				color: white;
+				opacity: 1;
+			}
 			#start_clock {
 				position: fixed;
 				bottom: 20px;
@@ -236,22 +289,24 @@ body.search_mode {
 				#start_clock .time .hour {
 					font-weight: bold;
 				}
-			#start #speeddial:before {
+			.start #speeddial:before {
 				content: '';
 				display: inline-block;
 				height: 100%; 
 				vertical-align: middle;
 				margin-right: -0.25em; /* Adjusts for spacing */
 			}
-			#start #speeddial {
+			.start #speeddial {
 				text-align: center;
 				width: 100%;
 				height: 100%;
 			}
-			#start #speeddial #dial_container {
+			.start #speeddial #dial_container {
 				display: inline-block;
+				vertical-align: middle;
+				margin-top: -80px;
 			}
-			#start #speeddial a {
+			.start #speeddial a {
 				display: inline-block;
 				width: 120px;
 				height: 120px;
@@ -264,90 +319,132 @@ body.search_mode {
 				background: rgba(0,0,0,0.15);
 				abox-shadow: inset 0 1px 1px -1px rgba(255,255,255,.2), 0 1px 1px -1px rgba(255,255,255,.2), inset 0 -1px 1px -1px rgba(0,0,0,.3), 0 -1px 1px -1px rgba(0,0,0,.3);
 				aborder: 1px solid rgba(0,0,0,0.12);
+				-webkit-transition: box-shadow .1s ease, background .1s ease;
 			}
-				#start #speeddial a .small {
+			.start #speeddial a:hover {
+				box-shadow: 0 0 1px rgba(255,255,255,.6);
+			}
+			.start #speeddial a.highlight {
+				background: rgba(20, 60, 90, .3);
+				box-shadow: 0 0 1px rgba(255,255,255,.6);
+			}
+				.start #speeddial a .small {
 					font-size: 16px;
 				}
-				#start #speeddial a .content {
-					font-size: 24px;
+				.start #speeddial a .content {
+					font-size: 20px;
 					height: 90px;
 					overflow: hidden;
 					display: inline-block;
 					width: 100%;
 				}
-				#start #speeddial a .title {
+				.start #speeddial a .title {
 					font-size: 14px;
 					vertical-align: top;
+					white-space: nowrap;
+					overflow: hidden;
+					text-overflow: clip;
 				}
-				#start #speeddial a img {
-					-webkit-filter: saturation(0);
+				.start #speeddial a img {
 				}
-#results {
+.section {
+	display: none;
 	position: absolute;
 	right: 0;
 	left: 400px;
 	top: 0;
 	min-height: 100%;
+	padding: 0 20px 0 30px;
 	
+	background: rgba(0,0,0,0.7);
+}
+.section.displayed {
+	display: block;
+}
+#search_results {
+	display: block;
+	
+	background: transparent;
 	opacity: 0;
 	-webkit-transition: background 0 ease .2s, opacity .15s linear;
 }
-body.search_mode #results {
+body.search_mode #search_results {
 	background: rgba(0,0,0,0.7);
 	opacity: 1;
 	-webkit-transition: background .2s ease, opacity 0s linear;
 }
-	#results h1 {
+	.section h1 {
 		font-weight: 300;
-		padding: 0 30px;
+		padding: 0;
 	}
-	#bookmarks h1 {
-		padding: 0 10px;
+	.section h1.no-results:after {
+		content: 'No results';
+		padding: 2px 6px;
+		margin-left: 10px;
+		vertical-align: middle;
+		
+		text-transform: uppercase;
+		font-size: 14px;
+		background: rgba(70,70,70,0.5);
+	}
+	.section h1.load-results:after {
+		content: '·';
+		margin-left: 10px;
+		
+		font-size: 18px;
+		font-weight: bold;
+		-webkit-animation: pulse 1.5s ease;
+		-webkit-animation-iteration-count: infinite;
+	}
+	@-webkit-keyframes pulse {
+		0% {opacity: 0.0; margin-left: 10px;}
+		50% {opacity: 1.0; }
+		100% {opacity: 0.0; margin-left: 20px;}
 	}
 	
 	/** Duckduckgo, Flickr... **/
-	#results .instant {
+	.section .instant {
 		-webkit-transition: opacity .2s ease;
 	}
-		#results .instant>a, #results .instant>.answer {
+		.section .instant>a, .section .instant>.answer {
 			aborder: 1px solid gray;
 			padding: 10px;
-			margin: 20px 20px 0 30px;
+			margin: 20px 0 0;
 			display: block;
 			color: white;
 			text-decoration: none;
 			background-color: rgba(70,70,70,.6);
 			white-space: normal;
 		}
-		#results .instant>a[style], #results .instant>.answer[style] {
+		.section .instant>a[style], .section .instant>.answer[style] {
 			padding-left: 36px;
 			background-position: 10px center;
 			background-repeat: no-repeat;
 			background-size: 1em;
 		}
-			#results .instant>a .url, #results .instant>.answer .url {
+			.section .instant>a .url, .section .instant>.answer .url {
 				margin-left: 1em;
 				opacity: .8;
 				font-size: smaller;
 			}
-			#results .instant>a .inlink_banner, #results .instant>.answer .inlink_banner {
+			.section .instant>a .inlink_banner, .section .instant>.answer .inlink_banner {
 				display: block;
 				text-align: right;
 				clear: both;
 				opacity: .8;
 				font-size: smaller;
 			}
-			#results .instant>.answer a {
+			.section .instant>.answer a {
 				color: #c0daf0;
 				text-decoration: underline;
 			}
-			#results .instant>.answer a:hover {
+			.section .instant>.answer a:hover {
 				text-decoration: none;
 			}
-		#results .instant > .photo-ribbon {
-			margin: 0 20px 10px 30px;
+		.section .instant > .photo-ribbon {
+			margin: 0 0 10px;
 		}
-			#results .instant > .photo-ribbon .photo {
+			.section .instant > .photo-ribbon .photo {
 				display: inline-block;
 				vertical-align: top;
 				font-size: 12px;
@@ -358,39 +455,43 @@ body.search_mode #results {
 				white-space: nowrap;
 				text-overflow: ellipsis;
 			}
-				#results .instant > .photo-ribbon .photo img {
+				.section .instant > .photo-ribbon .photo img {
 					width: 80px;
 					height: 80px;
 					background: #666;
 				}
-				#results .instant > .photo-ribbon .photo a {
+				.section .instant > .photo-ribbon .photo a {
 					color: white;
 				}
 		
 	
-	#results #bookmarks {
-		padding: 20px;
+	.section #bookmarks {
+		padding: 0 0 20px;
 		overflow: hidden;
 		-webkit-transition: opacity .2s ease;
 		margin-top: 0;
 	}
-		#results #bookmarks h2 {
-			margin: 0px -20px 8px;
-			padding: 6px 30px;
+		.section #bookmarks h1 {
+			padding: 0;
+			margin-top: 0;
+		}
+		.section #bookmarks h2 {
+			margin: 0px 0 8px;
+			padding: 6px 10px;
 			font-weight: normal;
 			font-size: 20px;
-			background: rgba(40,44,56,.6);
+			background: rgba(70,70,70,.6);
 		}
-		#results #bookmarks a + h1 {
+		.section #bookmarks a + h1 {
 			margin-top: 16px;
 		}
-		#results #bookmarks h3 {
+		.section #bookmarks h3 {
 			font-size: 16px;
-			margin: 12px 0 0 10px;
+			margin: 12px 0 0;
 		}
-		#results #bookmarks a {
+		.section #bookmarks a {
 			display: block;
-			margin: 6px 0 6px 10px;
+			margin: 6px 0 6px;
 			padding-left: 24px;
 			background-size: 16px;
 			background-repeat: no-repeat;
@@ -400,27 +501,18 @@ body.search_mode #results {
 			overflow: hidden;
 			text-overflow: clip;
 		}
-		#results #bookmarks a:hover {
+		.section #bookmarks a:hover {
 			color: #ddd;
 		}
-	body:not(.search_mode) #results #bookmarks, body:not(.search_mode) #results .instant {
+	body:not(.search_mode) .section #bookmarks, body:not(.search_mode) .section .instant {
 		opacity: 0;
 		height: 0;
 		padding: 0;
 		overflow: hidden;
 		margin-left: -10px;
 	}
-
-#settings_launchers {
-	position: fixed;
-	right: 0;
-	bottom: 0;
-}
-	#settings_launchers a {
-		color: white;
-		text-decoration: none;
-		font-size: smaller;
-	}
-	#settings_launchers a i {
-		margin-right: .3em;
+	.section form input[type="text"] {
+		display: block;
+		min-width: 300px;
+		margin: 6px 0;
 	}

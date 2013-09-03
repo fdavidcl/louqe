@@ -1,21 +1,21 @@
 ﻿<!DOCTYPE html>
 <html>
 	<head>
-		<title>Inicio</title>
+		<title>louqe</title>
 		
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
 		<!--link rel="stylesheet" href="theme/font-awesome.min.css" /-->
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" />
 		<link rel="stylesheet" href="theme/main.css" />
 		
 		<!--script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script-->
 		<script type="text/javascript" src="js/main.js"></script>
 		<script type="text/javascript" src="js/bookmarks.js"></script>
-		<script type="text/javascript" src="js/icons.js"></script>
 		<script type="text/javascript" src="js/widgets.js"></script>
 		<script type="text/javascript" src="js/search.js"></script>
 		<script type="text/javascript" src="js/duckduckgo.js"></script>
 		<script type="text/javascript" src="js/flickr.js"></script>
-		<script type="text/javascript" src="js/config.js"></script>
+		<script type="text/javascript" src="js/wolframalpha.js"></script>
 	</head>
 	<body>
 		<!--
@@ -24,14 +24,14 @@
 			archivos Javascript correspondientes.
 		-->
 		<div id="window_space"></div>
-		<div id="wrapper">
-			<section id="side">
-				<div id="search">
+		<div id="main" class="wrapper">
+			<section class="side">
+				<!--div id="search"-->
 					<form id="search_form">
-						<input type="text" id="search_input" autocomplete="off" />
+						<input type="search" id="search_input" autocomplete="off" />
 						<input type="submit" />
 					</form>
-					<div id="search_output">
+					<div id="search_output" class="options">
 						<div id="go_o" class="instant"></div>
 						<div id="bookmarks_o" class="instant">
 							<!-- Most relevant bookmarks -->
@@ -43,30 +43,67 @@
 							<!-- Related queries -->
 						</div>
 					</div>
-				</div>
+				<!--/div-->
 			</section>
-			<section id="start">
+			
+			<section class="start">
+				<a id="settings_launcher" href="#settings/icons" title="Edit preferences"><i class="icon-pencil"></i></a>
+			
 				<!-- Speed Dial -->
 				<div id="speeddial">
 					<div id="dial_container">
 						<a href="https://twitter.com"><span class="content">Twitter</span><span class="title"><img src="chrome://favicon/https://twitter.com" /> twitter.com</span></a>
 						<a href="https://tumblr.com"><span class="content">Tumblr</span><span class="title"><img src="chrome://favicon/http://tumblr.com" /> tumblr.com</span></a>
-						<a href="https://youtube.com"><span class="content">Youtube</span><span class="title"><img src="chrome://favicon/https://www.youtube.com" /> youtube.com</span></a>
+						<a href="https://youtube.com/feed/subscriptions"><span class="content">Youtube</span><span class="title"><img src="chrome://favicon/https://www.youtube.com" /> youtube.com/feed/subscriptions</span></a>
 						<a href="https://github.com"><span class="content">Github</span><span class="title"><img src="chrome://favicon/https://github.com" /> github.com</span></a>
+						<a href="https://cloud.feedly.com/#my"><span class="content">Feedly</span><span class="title"><img src="chrome://favicon/https://cloud.feedly.com/#my" /> cloud.feedly.com/#my</span></a>
+						<a href="http://store.steampowered.com/"><span class="content">Steam</span><span class="title"><img src="chrome://favicon/http://store.steampowered.com/" /> store.steampowered.com</span></a>
+						<a href="http://deviantart.com/"><span class="content">deviantART</span><span class="title"><img src="chrome://favicon/http://www.deviantart.com/" /> deviantart.com</span></a>
+						<a href="http://grooveshark.com/"><span class="content">Grooveshark</span><span class="title"><img src="chrome://favicon/http://grooveshark.com/" /> grooveshark.com</span></a>
 					</div>
 				</div>
 			</section>
-			<section id="results">
+			<section class="section" id="search_results">
 				<div id="bookmarks">
 					<!-- Filtered bookmarks -->
 				</div>
 			</section>
 		</div>
-		<div id="settings">
-			<div id="settings_launchers">
-				<a href="#config" id="edit_mode_button"><i class="icon-cog"></i></a>
-				<a href="#config" id="add_widget_button"><i class="icon-plus-sign"></i></a>
-			</div>
+		<div id="settings" class="wrapper">
+			<section class="side">
+				<div class="options">
+					<a href="#main"><i class="icon-chevron-left"></i>Back</a>
+					<a href="#settings/icons"><i class="icon-ellipsis-horizontal"></i>Speed dial</a>
+					<a href="#settings/wallpaper"><i class="icon-picture"></i>Wallpaper</a>
+					<a href="#settings/search"><i class="icon-search"></i>Search engines</a>
+					<a href="#settings/about"><i class="icon-question"></i>About Louqe</a>
+				</div>
+			</section>
+			<section class="section" id="icons">
+				<h1>Speed dial</h1>
+				<div id="current_dial"></div>
+				<h1>Add icon</h1>
+				<form id="add_icon_form">
+					<input type="text" placeholder="Name" id="new_icon_name" />
+					<input type="text" placeholder="http://example.com" id="new_icon_url" />
+					<a href="#settings/icons" id="add_icon" class="button">
+						<i class="icon-plus"></i>Add icon
+					</a>
+					<input type="submit" class="hide" />
+				</form>
+			</section>
+			<section class="section" id="wallpaper">
+				<h1>Wallpaper</h1>
+				
+			</section>
+			<section class="section" id="search">
+				<h1>Search engines</h1>
+				
+			</section>
+			<section class="section" id="about">
+				<h1>About Louqe</h1>
+				
+			</section>
 		</div>
 	</body>
 </html>

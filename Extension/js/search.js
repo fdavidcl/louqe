@@ -24,7 +24,7 @@ var search = {
 			name: "DuckDuckGo",
 			favicon: "http://www.duckduckgo.com/favicon.ico",
 			url: {
-				left: "http://www.duckduckgo.com/",
+				left: "http://www.duckduckgo.com/?q=",
 				right: ""
 			}
 		},
@@ -83,7 +83,7 @@ var search = {
 			var query = document.querySelector('#search_form > input').value.toLowerCase().replace(/\)/g, '\\)').replace(/\(/g, '\\(');
 			
 			for (var e in search.handlers) {
-				search.handlers[e].query(orig_query);
+				search.handlers[e].query(encodeURIComponent(orig_query));
 			}
 			
 			search.best = [];
@@ -92,8 +92,8 @@ var search = {
 			var removed_list = "";
 			var no_coincidences = true;
 			
-			for (var i = 0; i < icons.towers.length; i++) {
-				var this_tower = icons.towers[i];
+			for (var i = 0; i < bookmarks.towers.length; i++) {
+				var this_tower = bookmarks.towers[i];
 				var any_link_in_tower = false;
 				
 				for (var j = 0; j < this_tower[sections].length; j++) {
@@ -202,7 +202,9 @@ var search = {
 			}
 			
 			if (no_coincidences) {
-				removed_list += '#bookmarks>h1, ';
+				document.querySelector("#bookmarks h1").classList.add("no-results");
+			} else {
+				document.querySelector("#bookmarks h1").classList.remove("no-results");
 			}
 			
 			removed_list += "dummy { display: none !important; }";
@@ -217,9 +219,9 @@ var search = {
 			var html_out = "";
 			
 			if (query == "") {
-				config.ChangeMode(config.modes.user);
+				$("body").classList.remove("search_mode");
 			} else {
-				config.ChangeMode(config.modes.search);
+				$("body").classList.add("search_mode");
 			
 				// Mejores resultados de marcadores
 				var mejores = "";
@@ -273,12 +275,21 @@ var search = {
 		} else if (ev.keyCode == 40) {
 			ev.preventDefault();
 			search.HighlightItem(search.highlighted + 1);
+		} else if (ev.keyCode == 37) {
+			ev.preventDefault();
+			start.speeddial.HighlightItem(start.speeddial.highlighted - 1);
+		} else if (ev.keyCode == 39) {
+			ev.preventDefault();
+			start.speeddial.HighlightItem(start.speeddial.highlighted + 1);
 		}
 	},
 	FormSubmit: function() {
-		if (document.querySelector("#search_output .instant a.highlight")) {
+		if ($("body.search_mode") && document.querySelector("#search_output .instant a.highlight")) {
 			event.preventDefault();
 			document.location.href = document.querySelector("#search_output .instant a.highlight").href;
+		} else if ($("#speeddial a.highlight")) {
+			event.preventDefault();
+			document.location.href = document.querySelector("#speeddial a.highlight").href;
 		} else {
 			return false;
 		}

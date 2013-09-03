@@ -1,8 +1,9 @@
-search.answers.duckduckgo = {
-	name: "Answers",
-	url: "http://api.duckduckgo.com/?&format=json&q=",
+search.answers.wolframalpha = {
+	name: "Calculations",
+	url: "http://api.wolframalpha.com/v2/query?appid=LLLKAY-274LUWV28R&input=",
+	delay: 2000,
 	generateAnswer: function(content) {
-		content = JSON.parse(content);
+		/*content = JSON.parse(content);
 		var resultado = false;
 		var def_link = false;
 		var ddgl = document.createElement('span');
@@ -58,6 +59,8 @@ search.answers.duckduckgo = {
 		
 		if (resultado) ddgl.innerHTML += '<div id="ddg_banner">Instant answers provided by <a href="https://duckduckgo.com">DuckDuckGo</a>.</div>';
 		
-		return ddgl.innerHTML;
+		return ddgl.innerHTML;*/
+		
+		return "";
 	}
 };

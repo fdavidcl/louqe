@@ -23,7 +23,7 @@ var start = {
 			var months = ["january", "february", "march", 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
 			
 			var hour = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
-			if (localStorage.ampm == "true") {
+			if (_(ampm) == "true") {
 				ampm = "AM";
 				
 				if (hour > 12) {
@@ -42,13 +42,61 @@ var start = {
 			var node = this.node = document.createElement('div');
 			node.id = "start_clock";
 			node.innerHTML = '<span class="date"></span><span class="time"></span>';
-			document.getElementById("start").appendChild(node);
+			$(".start").appendChild(node);
 			start.clock.update();
 			this.interval = setInterval(function(){ start.clock.update() }, 1000);
 		}
 	},
+	speeddial: {
+		load: function() {
+			if (_("speeddial")) {
+				var links = JSON.parse(_("speeddial")); // List of [ "(Name)", "(URL)" ]
+				var html = "";
+				var edithtml = "";
+				
+				for (var i = 0; i < links.length; i++) {
+					var l = links[i];
+					
+					html += '<a href="' + l[1] + '"><span class="content">' + l[0] + '</span><span class="title"><img src="chrome://favicon/' + l[1] + '" /> ' + l[1].replace("http://","").replace("https://","") + '</span></a>';
+					edithtml += '<a href="' + l[1] + '"><span class="content">' + l[0] + '</span><span class="title"><img src="chrome://favicon/' + l[1] + '" /> ' + l[1].replace("http://","").replace("https://","") + '</span></a>';
+				}
+				
+				$("#dial_container").innerHTML = html;
+				$("#current_dial").innerHTML = edithtml;
+			}
+		},
+		add_icon: function() {
+			var name = $("#new_icon_name").value;
+			var url = $("#new_icon_url").value;
+			var allicons = _("speeddial") ? JSON.parse(_("speeddial")) : [];
+			
+			allicons.push([name, url]);
+			
+			_("speeddial", JSON.stringify(allicons));
+			location.reload(true);
+		},
+		highlighted: 0,
+		HighlightItem: function(ind) {
+			var all_links = $$("#speeddial a[href]");
+			
+			if (all_links[ind]) {
+				if ($("#speeddial a.highlight")) {
+					$("#speeddial a.highlight").classList.remove("highlight");
+				}
+				all_links[ind].classList.add("highlight");
+			
+				start.speeddial.highlighted = ind;
+			}
+		},
+	},
 	load: function() {
 		this.clock.load();
+		this.speeddial.load();
+		
+		$("#speeddial a[href]").classList.add("highlight");
+		
+		$("#add_icon").onclick = start.speeddial.add_icon;
+		$("#add_icon_form").onsubmit = start.speeddial.add_icon;
 	}
 };
 

@@ -72,7 +72,7 @@ icons.Save = function() {
 	localStorage.towersData = JSON.stringify(icons.towers);
 	icons.Display();
 };
-*/
+
 
 var io = {
 	windows: {
@@ -224,7 +224,7 @@ var config = {
 	},
 	LoadTheme: function() {
 		/* document.querySelector("#theme").href = localStorage.usertheme ?
-			localStorage.usertheme+"?_="+new Date().getTime() : "theme/metro_dark.css"; */
+			localStorage.usertheme+"?_="+new Date().getTime() : "theme/metro_dark.css"; /
 	},
 	Load: function() {
 		config.LoadTheme();
@@ -263,7 +263,7 @@ var config = {
 		} else {
 			config.ChangeMode(config.modes.user);
 		}
-	},*/
+	},/
 	SetTheme: function() {
 		var new_theme = document.querySelector('#choose_theme input:checked').value;
 		localStorage.usertheme = new_theme;
@@ -271,3 +271,4 @@ var config = {
 		location.reload(true);
 	}
 };
+*/
