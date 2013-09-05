@@ -60,7 +60,7 @@ var search = {
 		
 	},
 	Instant: function() {
-		var orig_query = document.querySelector('#search_form > input').value;
+		var orig_query = $('#search_form > input').value;
 		
 		if (orig_query != search.last_query) {
 			var sections = 1, links = 1, href = 1, name = 0;
@@ -74,13 +74,13 @@ var search = {
 					link = "http://" + orig_query;
 				}
 				
-				document.querySelector('#go_o').innerHTML = "<a href=\"" + link + "\" style=\"background-image: url(chrome://favicon/" + link + ");\">Ir<span class=\"url\">" + link + "</span></a>";
+				$('#go_o').innerHTML = "<a href=\"" + link + "\" style=\"background-image: url(chrome://favicon/" + link + ");\">Ir<span class=\"url\">" + link + "</span></a>";
 			} else {
-				document.querySelector('#go_o').innerHTML = "";
+				$('#go_o').innerHTML = "";
 			}
 
 			search.last_query = orig_query;
-			var query = document.querySelector('#search_form > input').value.toLowerCase().replace(/\)/g, '\\)').replace(/\(/g, '\\(');
+			var query = $('#search_form > input').value.toLowerCase().replace(/\)/g, '\\)').replace(/\(/g, '\\(');
 			
 			for (var e in search.handlers) {
 				search.handlers[e].query(encodeURIComponent(orig_query));
@@ -104,7 +104,7 @@ var search = {
 						var l_name = this_section[links][k][name];
 						var l_url = this_section[links][k][href].replace('http','').replace('s://','').replace('://','');
 						
-						if (document.querySelector('#l'+i+'_'+j+'_'+k)) {
+						if ($('#l'+i+'_'+j+'_'+k)) {
 							var relevancia = -1;
 							var words = query.split(' ');
 							
@@ -158,7 +158,7 @@ var search = {
 									relevancia += rel_name;
 								}
 							
-								//document.querySelector('#l'+i+'_'+j+'_'+k).style.display = 'block';
+								//$('#l'+i+'_'+j+'_'+k).style.display = 'block';
 								
 								var obj_encontrado = {
 									name: l_name,
@@ -182,7 +182,7 @@ var search = {
 								// Ordenar los resultados más relevantes, eliminar
 								// los menos relevantes, dejando solo 3.
 							} else {
-								//document.querySelector('#l'+i+'_'+j+'_'+k).style.display = 'none';
+								//$('#l'+i+'_'+j+'_'+k).style.display = 'none';
 								// Hacemos invisible el enlace
 								removed_list += '#l'+i+'_'+j+'_'+k+', ';
 							}
@@ -202,19 +202,19 @@ var search = {
 			}
 			
 			if (no_coincidences) {
-				document.querySelector("#bookmarks h1").classList.add("no-results");
+				$("#bookmarks h1").classList.add("no-results");
 			} else {
-				document.querySelector("#bookmarks h1").classList.remove("no-results");
+				$("#bookmarks h1").classList.remove("no-results");
 			}
 			
 			removed_list += "dummy { display: none !important; }";
 			
-			if (!document.querySelector('#search_css')) {
+			if (!$('#search_css')) {
 				var n_style = document.createElement('style');
 				n_style.id = "search_css";
-				document.querySelector('body').appendChild(n_style);
+				$('body').appendChild(n_style);
 			}
-			document.querySelector('#search_css').innerHTML = removed_list;
+			$('#search_css').innerHTML = removed_list;
 			
 			var html_out = "";
 			
@@ -250,16 +250,16 @@ var search = {
 				search_html += '<a href="' + engine.url.left + encodeURIComponent(orig_query) + engine.url.right + '" style="background-image: url(' + engine.favicon + ')" class="search-item"><i class="icon-search icon-small"></i>' + engine.name + '</a>';
 			}
 			
-			document.querySelector('#bookmarks_o').innerHTML = html_out;
-			document.querySelector('#engines_o').innerHTML = search_html;
+			$('#bookmarks_o').innerHTML = html_out;
+			$('#engines_o').innerHTML = search_html;
 			search.HighlightItem(0);
 		}
 	},
 	HighlightItem: function(ind) {
-		var all_links = document.querySelectorAll("#search_output .instant a[href]");
+		var all_links = $$("#search_output .instant a[href]");
 		if (all_links[ind]) {
-			if (document.querySelector("#search_output a.highlight")) {
-				document.querySelector("#search_output a.highlight").classList.remove("highlight");
+			if ($("#search_output a.highlight")) {
+				$("#search_output a.highlight").classList.remove("highlight");
 			}
 			all_links[ind].classList.add("highlight");
 		
@@ -269,39 +269,39 @@ var search = {
 	HighlightByKey: function(ev) {
 		ev = ev || window.event;
 		
-		if (ev.keyCode == 38) {
-			ev.preventDefault();
-			search.HighlightItem(search.highlighted - 1);
-		} else if (ev.keyCode == 40) {
-			ev.preventDefault();
-			search.HighlightItem(search.highlighted + 1);
+		if ($("body.search_mode")) {
+			if (ev.keyCode == 38) {
+				ev.preventDefault();
+				search.HighlightItem(search.highlighted - 1);
+			} else if (ev.keyCode == 40) {
+				ev.preventDefault();
+				search.HighlightItem(search.highlighted + 1);
+			}
 		} else if (ev.keyCode == 37) {
-			ev.preventDefault();
 			start.speeddial.HighlightItem(start.speeddial.highlighted - 1);
 		} else if (ev.keyCode == 39) {
-			ev.preventDefault();
 			start.speeddial.HighlightItem(start.speeddial.highlighted + 1);
 		}
 	},
 	FormSubmit: function() {
-		if ($("body.search_mode") && document.querySelector("#search_output .instant a.highlight")) {
+		if ($("body.search_mode") && $("#search_output .instant a.highlight")) {
 			event.preventDefault();
-			document.location.href = document.querySelector("#search_output .instant a.highlight").href;
+			document.location.href = $("#search_output .instant a.highlight").href;
 		} else if ($("#speeddial a.highlight")) {
 			event.preventDefault();
-			document.location.href = document.querySelector("#speeddial a.highlight").href;
+			document.location.href = $("#speeddial a.highlight").href;
 		} else {
 			return false;
 		}
 	},
 	Load: function() {
 		this.Display();
-		document.querySelector('#search_form > input').focus();
-		document.querySelector('#search_form > input').oninput = function() { search.Instant(); };
-		document.querySelector('#search_form > input').onpaste = function() { search.Instant(); };
-		document.querySelector('#search_form > input').onkeyup = function() { search.Instant(); };
-		document.querySelector('#search_form > input').onkeydown = function() { search.HighlightByKey(); };
-		document.querySelector('#search_form').onsubmit = function() { search.FormSubmit(); };
+		$('#search_form > input').focus();
+		$('#search_form > input').oninput = function() { search.Instant(); };
+		$('#search_form > input').onpaste = function() { search.Instant(); };
+		$('#search_form > input').onkeyup = function() { search.Instant(); };
+		$('#search_form > input').onkeydown = function() { search.HighlightByKey(); };
+		$('#search_form').onsubmit = function() { search.FormSubmit(); };
 		
 		search.handlers = {};
 		

@@ -182,6 +182,6 @@ var bookmarks = {
 			
 		}
 		
-		document.querySelector('#bookmarks').innerHTML = bkhtml;
+		$('#bookmarks').innerHTML = bkhtml;
 	}
 };

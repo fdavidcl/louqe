@@ -7,8 +7,8 @@ search.answers.duckduckgo = {
 		var def_link = false;
 		var ddgl = document.createElement('span');
 		
-		if (document.querySelector(".ddg-official-site")) {
-			document.querySelector(".ddg-official-site").parentNode.removeChild(document.querySelector(".ddg-official-site"));
+		if ($(".ddg-official-site")) {
+			$(".ddg-official-site").parentNode.removeChild($(".ddg-official-site"));
 		}
 		
 		if (content.Results[0]) { 

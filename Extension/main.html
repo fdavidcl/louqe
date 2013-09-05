@@ -4,7 +4,7 @@
 		<title>louqe</title>
 		
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
-		<!--link rel="stylesheet" href="theme/font-awesome.min.css" /-->
+		<link rel="stylesheet" href="theme/font-awesome.min.css" />
 		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" />
 		<link rel="stylesheet" href="theme/main.css" />
 		
@@ -83,18 +83,20 @@
 				<h1>Speed dial</h1>
 				<div id="current_dial"></div>
 				<h1>Add icon</h1>
+				
 				<form id="add_icon_form">
 					<input type="text" placeholder="Name" id="new_icon_name" />
 					<input type="text" placeholder="http://example.com" id="new_icon_url" />
 					<a href="#settings/icons" id="add_icon" class="button">
 						<i class="icon-plus"></i>Add icon
 					</a>
-					<input type="submit" class="hide" />
+					<input type="submit" />
 				</form>
 			</section>
 			<section class="section" id="wallpaper">
 				<h1>Wallpaper</h1>
 				
+				<form id="wallpaper_settings"></form>
 			</section>
 			<section class="section" id="search">
 				<h1>Search engines</h1>
@@ -102,7 +104,9 @@
 			</section>
 			<section class="section" id="about">
 				<h1>About Louqe</h1>
-				
+				<div class="logo">louqe <span class="version">0.1</span></div>
+				<p>Created by <a href="http://twitter.com/fdavidcl">David Charte</a></p>
+				<p>Wallpapers from The Gradient Series by <a href="http://electroqute-designs.deviantart.com/">~electroqute-designs</a>.</p>
 			</section>
 		</div>
 	</body>

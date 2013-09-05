@@ -18,8 +18,8 @@ body {
 	min-width: 100%;
 	
 	font-family: Open Sans, 'Open Sans', Segoe UI, Tahoma, Helvetica, Arial, sans-serif;
-	background: url("../back/luminance.jpg") center center fixed;
-	background-color: #666;
+	background: #666 center center fixed;
+	abackground-color: #666;
 	background-size: cover;
 	color: white;
 }
@@ -36,6 +36,9 @@ body.search_mode {
 		border: solid #505050;
 		border-width: 0 2px;
 	}
+a {
+	color: white;
+}
 .icon-small {
 	font-weight: normal;
 	font-size: 12px;
@@ -326,6 +329,7 @@ body.search_mode {
 			}
 			.start #speeddial a.highlight {
 				background: rgba(20, 60, 90, .3);
+				background: rgba(0,119,170,.5);
 				box-shadow: 0 0 1px rgba(255,255,255,.6);
 			}
 				.start #speeddial a .small {
@@ -465,31 +469,31 @@ body.search_mode #search_results {
 				}
 		
 	
-	.section #bookmarks {
+	#bookmarks {
 		padding: 0 0 20px;
 		overflow: hidden;
 		-webkit-transition: opacity .2s ease;
 		margin-top: 0;
 	}
-		.section #bookmarks h1 {
+		#bookmarks h1 {
 			padding: 0;
 			margin-top: 0;
 		}
-		.section #bookmarks h2 {
+		#bookmarks h2 {
 			margin: 0px 0 8px;
 			padding: 6px 10px;
 			font-weight: normal;
 			font-size: 20px;
 			background: rgba(70,70,70,.6);
 		}
-		.section #bookmarks a + h1 {
+		#bookmarks a + h1 {
 			margin-top: 16px;
 		}
-		.section #bookmarks h3 {
+		#bookmarks h3 {
 			font-size: 16px;
 			margin: 12px 0 0;
 		}
-		.section #bookmarks a {
+		#bookmarks a {
 			display: block;
 			margin: 6px 0 6px;
 			padding-left: 24px;
@@ -501,10 +505,10 @@ body.search_mode #search_results {
 			overflow: hidden;
 			text-overflow: clip;
 		}
-		.section #bookmarks a:hover {
+		#bookmarks a:hover {
 			color: #ddd;
 		}
-	body:not(.search_mode) .section #bookmarks, body:not(.search_mode) .section .instant {
+	body:not(.search_mode) #bookmarks, body:not(.search_mode) .section .instant {
 		opacity: 0;
 		height: 0;
 		padding: 0;
@@ -516,3 +520,143 @@ body.search_mode #search_results {
 		min-width: 300px;
 		margin: 6px 0;
 	}
+	#current_dial {
+	
+	}
+		#current_dial a {
+			display: inline-block;
+			vertical-align: top;
+			width: 100px;
+			height: 100px;
+			padding: 10px;
+			position: relative;
+			margin: 0 0 10px 0;
+			
+			font-size: 14px;
+			background: rgba(255,255,255,.3);
+			overflow: hidden;
+			text-decoration: none;
+			cursor: move;
+			-webkit-transition: width .2s ease, padding .2s ease;
+		}
+		#current_dial a:before {
+			position: absolute;
+			display: inline-block;
+			width: 30px;
+			height: 30px;
+			left: 45px;
+			top: 45px;
+			
+			content: "\f047";
+			font-family: FontAwesome;
+			font-size: 30px;
+			opacity: .2;
+		}
+			#current_dial a * {
+				-webkit-transition: opacity .08s ease;
+			}
+			#current_dial a .content {
+				padding-right: 20px;
+			}
+			#current_dial a .title {
+				position: absolute;
+				display: block;
+				bottom: 10px;
+				
+				white-space: nowrap;
+			}
+			#current_dial a .delete-icon {
+				position: absolute;
+				top: 0;
+				right: 0;
+				padding: 10px;
+				
+				opacity: 0.3;
+				cursor: pointer;
+			}
+		#current_dial a:hover {
+		
+		}
+		#current_dial a:hover:before {
+			opacity: .6;
+		}
+			#current_dial a:hover .title, #current_dial a:hover .content {
+				opacity: 1;
+			}
+			#current_dial a:hover .delete-icon {
+				opacity: 1;
+			}
+			#current_dial a .delete-icon:hover {
+				color: #f66;
+			}
+		#current_dial a.dragging {
+			width: 0;
+			padding: 10px 0;
+		}
+		#current_dial a.dragging + .drop-icon-here {
+			display: none;
+		}
+		#current_dial .drop-icon-here {
+			display: inline-block;
+			height: 120px;
+			width: 10px;
+			
+			background: transparent;
+		}
+		#current_dial .drop-icon-here:first-child {
+			width: 0;
+		}
+	#current_dial.ondrag {
+	
+	}
+		#current_dial.ondrag a {
+			opacity: 0.6;
+		}
+		#current_dial.ondrag .drop-icon-here {
+			width: 50px;
+			
+			-webkit-transition: width .2s ease, background .2s ease;
+		}
+		#current_dial.ondrag .drop-icon-here.ondragover {
+			background: rgba(255,255,255,.4);
+		}
+	#add_icon_form [type="submit"] {
+		height: 0;
+		width: 0;
+		padding: 0;
+		margin: 0;
+		border: 0px solid;
+		visibility: hidden;
+	}
+			
+	#wallpaper_settings {
+	
+	}
+		#wallpaper_settings input.wp-select {
+			display: none;
+		}
+		#wallpaper_settings input.wp-select + label {
+			width: 88px;
+			display: inline-block;
+			margin: 0 6px 6px 0;
+			padding: 66px 4px 6px 4px;
+			
+			background: #666 no-repeat top left;
+			line-height: 100%;
+			font-size: 14px;
+		}
+		#wallpaper_settings input.wp-select:checked + label {
+			border: 2px solid #07a;
+			margin: -2px 4px 4px -2px;
+		}
+	.logo {
+		font-size: 80px;
+		font-weight: 200;
+		letter-spacing: -5px;
+	}
+		.logo .version {
+			font-size: 24px;
+			letter-spacing: -2px;
+		}
+
+

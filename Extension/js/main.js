@@ -139,6 +139,7 @@ window.onload = function() {
 	search.Load();
 	//liveinfo.Load();
 	start.load();
+	wallpaper.load();
 	//icons.Load();
 	//config.Load();
 	bookmarks.Load(); // Actualizamos marcadores silenciosamente
