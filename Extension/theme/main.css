@@ -218,7 +218,7 @@ a {
 				#ddg_banner {
 					font-size: smaller;
 					color: #d0d0d0;
-					margin: 10px 0 0;
+					margin: 0;
 				}
 				#ddg_banner a {
 					color: #d0d0d0;
@@ -413,7 +413,7 @@ body.search_mode #search_results {
 		.section .instant>a, .section .instant>.answer {
 			aborder: 1px solid gray;
 			padding: 10px;
-			margin: 20px 0 0;
+			margin: 20px 0 20px;
 			display: block;
 			color: white;
 			text-decoration: none;
@@ -426,6 +426,16 @@ body.search_mode #search_results {
 			background-repeat: no-repeat;
 			background-size: 1em;
 		}
+			.section .instant > .answer h3 {
+				margin: 0 0 6px;
+				font-size: 16px;
+			}
+			.section .instant > .answer .image-answer {
+				display: inline-block;
+				margin: 6px 6px 6px 0;
+				padding: 4px 6px;
+				background: white;
+			}
 			.section .instant>a .url, .section .instant>.answer .url {
 				margin-left: 1em;
 				opacity: .8;
@@ -537,7 +547,6 @@ body.search_mode #search_results {
 			overflow: hidden;
 			text-decoration: none;
 			cursor: move;
-			-webkit-transition: width .2s ease, padding .2s ease;
 		}
 		#current_dial a:before {
 			position: absolute;
@@ -592,6 +601,7 @@ body.search_mode #search_results {
 		#current_dial a.dragging {
 			width: 0;
 			padding: 10px 0;
+			-webkit-transition: width .2s ease, padding .2s ease;
 		}
 		#current_dial a.dragging + .drop-icon-here {
 			display: none;

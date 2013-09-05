@@ -74,6 +74,8 @@ function ModuleHandler(module) {
 					}
 					
 					ans.innerHTML = anshtml != "" ? ("<h1>" + module.name + "</h1>" + anshtml) : ("<h1 class='no-results'>" + module.name + "</h1>");
+					
+					if (search.highlighted == 0) search.HighlightItem(0);
 				}
 			};
 			xmlhttp.open("GET", module.url + q, true);

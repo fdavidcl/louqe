@@ -3,6 +3,37 @@ search.answers.wolframalpha = {
 	url: "http://api.wolframalpha.com/v2/query?appid=LLLKAY-274LUWV28R&input=",
 	delay: 2000,
 	generateAnswer: function(content) {
+		var outhtml = "";
+		
+		var sections = content.querySelectorAll("pod");
+		
+		for (var i = 0; i < sections.length; i++) {
+			var element = sections[i];
+			outhtml += '<span class="answer"><h3>' + element.getAttribute("title") + '</h3>';
+			
+			var subsections = element.querySelectorAll("subpod");
+			
+			for (var j = 0; j < subsections.length; j++) {
+				var subelement = subsections[j];
+				
+				if (subelement.querySelector("plaintext").textContent && element.getAttribute("scanner") != "Data") {
+					outhtml += '<span class="text-answer">' + subelement.querySelector("plaintext").textContent;
+				} else if (subelement.querySelector("img")) {
+					outhtml += '<span class="image-answer">';
+					
+					var dummy = document.createElement("span");
+					dummy.appendChild(subelement.querySelector("img"));
+					outhtml += dummy.innerHTML;
+				}
+				
+				outhtml += "</span>";
+			}
+			
+			outhtml += "</span>";
+		}
+		
+		return outhtml;
+		
 		/*content = JSON.parse(content);
 		var resultado = false;
 		var def_link = false;

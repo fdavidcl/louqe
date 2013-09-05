@@ -56,7 +56,7 @@ search.answers.duckduckgo = {
 			def_link = true;
 		}
 		
-		if (resultado) ddgl.innerHTML += '<div id="ddg_banner">Instant answers provided by <a href="https://duckduckgo.com">DuckDuckGo</a>.</div>';
+		if (resultado) ddgl.innerHTML += '<div id="ddg_banner">Instant answers powered by <a href="https://duckduckgo.com">DuckDuckGo</a>.</div>';
 		
 		return ddgl.innerHTML;
 	}
