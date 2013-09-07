@@ -406,12 +406,11 @@ body.search_mode #search_results {
 		100% {opacity: 0.0; margin-left: 20px;}
 	}
 	
-	/** Duckduckgo, Flickr... **/
+	/** Duckduckgo, Flickr, Last.fm, Youtube, WolframAlpha **/
 	.section .instant {
 		-webkit-transition: opacity .2s ease;
 	}
 		.section .instant>a, .section .instant>.answer {
-			aborder: 1px solid gray;
 			padding: 10px;
 			margin: 20px 0 20px;
 			display: block;
@@ -419,6 +418,16 @@ body.search_mode #search_results {
 			text-decoration: none;
 			background-color: rgba(70,70,70,.6);
 			white-space: normal;
+		}
+		.section .instant>.oneline.answer {
+			margin: 6px 0;
+		}
+		.section .instant> .video.answer {
+			width: 400px;
+			display: inline-block;
+			margin: 0 10px 10px 0;
+			clear: left;
+			vertical-align: top;
 		}
 		.section .instant>a[style], .section .instant>.answer[style] {
 			padding-left: 36px;
@@ -435,6 +444,23 @@ body.search_mode #search_results {
 				margin: 6px 6px 6px 0;
 				padding: 4px 6px;
 				background: white;
+			}
+			.section .instant>a .album-thumbnail {
+				display: inline-block;
+				width: 34px;
+				vertical-align: middle;
+				margin-right: 10px;
+			}
+			.section .instant>a .song-name {
+				font-weight: 600;
+			}
+			.section .instant> .answer .video-thumbnail {
+				float: left;
+				margin-right: 10px;
+			}
+			.section .instant> .answer .video-author {
+				font-size: 14px;
+				color: #d0d0d0;
 			}
 			.section .instant>a .url, .section .instant>.answer .url {
 				margin-left: 1em;
