@@ -1,7 +1,7 @@
 search.answers.youtube = {
 	name: "Videos",
 	url: "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&type=video&videoDefinition=any&videoEmbeddable=any&key=AIzaSyCZzbZYrl0q_DifacgL__oJMcSRLfR8qsY&maxResults=8&q=",
-	delay: 500,
+	delay: 1000,
 	generateAnswer: function(response) {
 		response = JSON.parse(response);
 		var vidhtml = "";
