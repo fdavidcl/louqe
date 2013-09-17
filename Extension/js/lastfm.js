@@ -1,8 +1,9 @@
-search.answers.lastfm = {
-	name: "Songs",
-	url: "http://ws.audioscrobbler.com/2.0/?method=track.search&api_key=a1bb084d4264b8ee3ef29234f1d0a25d&format=json&limit=15&track=",
-	delay: 1000,
-	generateAnswer: function(response) {
+search.lenses.lastfm = new Lens(
+	"lastfm",
+	"http://ws.audioscrobbler.com/2.0/?method=track.search&api_key=a1bb084d4264b8ee3ef29234f1d0a25d&format=json&limit=15&track=",
+	"Songs",
+	"music",
+	function(response) {
 		response = JSON.parse(response);
 		var mushtml = "";
 		
@@ -16,5 +17,6 @@ search.answers.lastfm = {
 		}
 		
 		return mushtml;
-	}
-};
+	},
+	1000
+);

@@ -36,66 +36,8 @@ function AjaxRequest(url, callback) {
 	}
 }
 
-/*** Prototipo de Module Handler ***/
 
-function ModuleHandler(module) {
-	this.module = module;
-	
-	var targetid = "results" + module.id;
-	var ans = document.createElement('span');
-	ans.id = "results" + module.id;
-	ans.className = "instant";
-	$("#search_results").insertBefore(ans, $("#bookmarks"));
-	
-	var lastquery = "";
-	
-	this.query = function(q) {
-		lastquery = q;
-		
-		if (q != "") {
-			ans.innerHTML = "<h1 class='load-results'>" + module.name + "</h1>";
-			
-			var xmlhttp;
-			
-			if (window.XMLHttpRequest) {
-				xmlhttp = new XMLHttpRequest();
-			} else {
-				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-			}
-
-			xmlhttp.onreadystatechange = function() {
-				if (xmlhttp.readyState == 4 && xmlhttp.status == 200 && q == lastquery) {
-					var anshtml = "";
-					
-					if (xmlhttp.responseXML) {
-						anshtml = module.generateAnswer(xmlhttp.responseXML);
-					} else {
-						anshtml = module.generateAnswer(xmlhttp.responseText);
-					}
-					
-					ans.innerHTML = anshtml != "" ? ("<h1>" + module.name + "</h1>" + anshtml) : ("<h1 class='no-results'>" + module.name + "</h1>");
-					
-					if (search.highlighted == 0) search.HighlightItem(0);
-				}
-			};
-			xmlhttp.open("GET", module.url + q, true);
-			
-			if (module.delay) {
-				setTimeout(function(){
-					if (lastquery == q) {
-						xmlhttp.send();
-					}
-				}, module.delay);
-			} else {
-				xmlhttp.send();
-			}
-		} else {
-			ans.innerHTML = "";
-		}
-	};
-}
-
-/*** Hash management ***/
+/*** URL hash management ***/
 var gethash = function() {
 	var hash = location.hash.replace('#','');
 	

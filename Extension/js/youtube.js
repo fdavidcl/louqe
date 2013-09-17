@@ -1,8 +1,8 @@
-search.answers.youtube = {
-	name: "Videos",
-	url: "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&type=video&videoDefinition=any&videoEmbeddable=any&key=AIzaSyCZzbZYrl0q_DifacgL__oJMcSRLfR8qsY&maxResults=8&q=",
-	delay: 1000,
-	generateAnswer: function(response) {
+search.lenses.youtube = new Lens(
+	"youtube",	"https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&type=video&videoDefinition=any&videoEmbeddable=any&key=AIzaSyCZzbZYrl0q_DifacgL__oJMcSRLfR8qsY&maxResults=8&q=",
+	"Videos",
+	"youtube-play",
+	function(response) {
 		response = JSON.parse(response);
 		var vidhtml = "";
 		
@@ -16,5 +16,6 @@ search.answers.youtube = {
 		}
 		
 		return vidhtml;
-	}
-};
+	},
+	1000
+);

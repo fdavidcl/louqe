@@ -69,7 +69,7 @@ a {
 		margin-right: .6em;
 	}
 
-#window_space {
+/*#window_space {
 	height: 0;
 }
 	.window {
@@ -121,7 +121,7 @@ a {
 				background: #505050;
 				color: #e0e0e0;
 				box-shadow: 0 0 5px rgba(0,0,0,.4);
-			}
+			}*/
 .wrapper {
 	display: none;
 }
@@ -224,7 +224,7 @@ a {
 					color: #d0d0d0;
 				}
 				
-			body:not(.search_mode) #search_output, body:not(.search_mode) #search_results .instant {
+			body:not(.search_mode) #main .side .options, body:not(.search_mode) #search_results .instant {
 				opacity: 0;
 				height: 0;
 				overflow: hidden;
@@ -407,9 +407,19 @@ body.search_mode #search_results {
 	}
 	
 	/** Duckduckgo, Flickr, Last.fm, Youtube, WolframAlpha **/
-	.section .instant {
+	.section#search_results .instant {
+		display: block;
+		padding-left: 10px;
+		margin: 20px 0 20px 22px;
+		border-left: 1px solid rgba(255,255,255,.3);
+		min-height: 1.2em;
+		
 		-webkit-transition: opacity .2s ease;
 	}
+		.section .lens-icon {
+			position: absolute;
+			margin-left: -36px;
+		}
 		.section .instant>a, .section .instant>.answer {
 			margin: 20px 0 20px;
 			display: block;

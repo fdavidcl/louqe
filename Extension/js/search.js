@@ -11,7 +11,7 @@
  */
 
 var search = {
-	engines: [
+	/*engines: [
 		{
 			name: "Google",
 			favicon: "http://www.google.es/favicon.ico",
@@ -52,8 +52,10 @@ var search = {
 				right: ""
 			}
 		}
-	],
-	answers: {},
+	],*/
+	engines: [],
+	lenses: {},
+	actions: {},
 	highlighted: -1,
 	last_query: "",
 	Display: function() {
@@ -82,8 +84,8 @@ var search = {
 			search.last_query = orig_query;
 			var query = $('#search_form > input').value.toLowerCase().replace(/\)/g, '\\)').replace(/\(/g, '\\(');
 			
-			for (var e in search.handlers) {
-				search.handlers[e].query(encodeURIComponent(orig_query));
+			for (var e in search.lenses) {
+				search.lenses[e].query(encodeURIComponent(orig_query));
 			}
 			
 			search.best = [];
@@ -303,12 +305,10 @@ var search = {
 		$('#search_form > input').onkeydown = function() { search.HighlightByKey(); };
 		$('#search_form').onsubmit = function() { search.FormSubmit(); };
 		
-		search.handlers = {};
+		//search.handlers = {};
 		
-		for (var e in search.answers) {
-			var engine = search.answers[e];
-			engine.id = e;
-			search.handlers[e] = new ModuleHandler(engine);
+		for (var e in search.lenses) {
+			search.lenses[e].load();
 		}
 	}
 };

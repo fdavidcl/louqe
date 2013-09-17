@@ -1,8 +1,9 @@
-search.answers.wolframalpha = {
-	name: "Calculations",
-	url: "http://api.wolframalpha.com/v2/query?appid=LLLKAY-274LUWV28R&input=",
-	delay: 2000,
-	generateAnswer: function(content) {
+search.lenses.wolframalpha = new Lens(
+	"wolframalpha",
+	"http://api.wolframalpha.com/v2/query?appid=LLLKAY-274LUWV28R&input=",
+	"Calculations",
+	null,
+	function(content) {
 		var outhtml = "";
 		
 		var sections = content.querySelectorAll("pod");
@@ -93,5 +94,6 @@ search.answers.wolframalpha = {
 		return ddgl.innerHTML;*/
 		
 		return "";
-	}
-};
+	},
+	2000
+);

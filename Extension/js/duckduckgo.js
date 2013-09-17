@@ -1,7 +1,9 @@
-search.answers.duckduckgo = {
-	name: "Answers",
-	url: "http://api.duckduckgo.com/?&format=json&q=",
-	generateAnswer: function(content) {
+search.lenses.duckduckgo = new Lens(
+	"duckduckgo",
+	"http://api.duckduckgo.com/?&format=json&q=",
+	"Answers",
+	"puzzle-piece",
+	function(content) {
 		content = JSON.parse(content);
 		var resultado = false;
 		var def_link = false;
@@ -60,4 +62,4 @@ search.answers.duckduckgo = {
 		
 		return ddgl.innerHTML;
 	}
-};
+);
