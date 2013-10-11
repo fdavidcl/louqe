@@ -1,9 +1,10 @@
-search.lenses.flickr = new Lens(
-	"flickr",
-	"http://api.flickr.com/services/rest/?method=flickr.tags.getClusterPhotos&api_key=2c20d4d9b0158e2b60baf150907f5176&format=json&nojsoncallback=1&tag=",
-	"Photos",
-	"picture",
-	function(response) {
+search.lenses.flickr = new Lens({
+	id: "flickr",
+	url: "http://api.flickr.com/services/rest/?method=flickr.tags.getClusterPhotos&api_key=2c20d4d9b0158e2b60baf150907f5176&format=json&nojsoncallback=1&tag=",
+	name: "Photos",
+	icon: "picture",
+	delay: 2000,
+	generateAnswer: function(response) {
 		response = JSON.parse(response);
 		var cont = "<div class='photo-ribbon'>";
 		
@@ -25,6 +26,5 @@ search.lenses.flickr = new Lens(
 		cont += "</div>";
 		
 		return response.photos.photo.length > 0 ? cont : "";
-	},
-	2000
-);
+	}
+});

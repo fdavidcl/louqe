@@ -222,7 +222,9 @@ var search = {
 			
 			if (query == "") {
 				$("body").classList.remove("search_mode");
+				location.hash = "";
 			} else {
+				if (location.hash == "#search/start") location.hash = "#search/everything";
 				$("body").classList.add("search_mode");
 			
 				// Mejores resultados de marcadores
@@ -258,10 +260,10 @@ var search = {
 		}
 	},
 	HighlightItem: function(ind) {
-		var all_links = $$("#search_output .instant a[href]");
+		var all_links = $$("#everything .instant a[href]");
 		if (all_links[ind]) {
-			if ($("#search_output a.highlight")) {
-				$("#search_output a.highlight").classList.remove("highlight");
+			if ($("#everything a.highlight")) {
+				$("#everything a.highlight").classList.remove("highlight");
 			}
 			all_links[ind].classList.add("highlight");
 		
@@ -286,9 +288,11 @@ var search = {
 		}
 	},
 	FormSubmit: function() {
-		if ($("body.search_mode") && $("#search_output .instant a.highlight")) {
-			event.preventDefault();
-			document.location.href = $("#search_output .instant a.highlight").href;
+		if ($("body.search_mode")) {
+			if ($("#everything .instant a.highlight")) {
+				event.preventDefault();
+				document.location.href = $("#everything .instant a.highlight").href;
+			}
 		} else if ($("#speeddial a.highlight")) {
 			event.preventDefault();
 			document.location.href = $("#speeddial a.highlight").href;

@@ -13,6 +13,153 @@
  * BUGS
  * TODO
  */
+
+search.lenses.bookmarks = new Lens({
+	id: "bookmarks",
+	name: "Bookmarks",
+	icon: "bookmark",
+	query: function(query) {
+		var sections = 1, links = 1, href = 1, name = 0;
+		
+		search.best = [];
+		var min_relev = -1;
+		
+		var removed_list = "";
+		var no_coincidences = true;
+		
+		for (var i = 0; i < bookmarks.towers.length; i++) {
+			var this_tower = bookmarks.towers[i];
+			var any_link_in_tower = false;
+			
+			for (var j = 0; j < this_tower[sections].length; j++) {
+				var this_section = this_tower[sections][j];
+				var any_link_in_section = false;
+				
+				for (var k = 0; k < this_section[links].length; k++) {
+					var l_name = this_section[links][k][name];
+					var l_url = this_section[links][k][href].replace('http','').replace('s://','').replace('://','');
+					
+					if ($('#l'+i+'_'+j+'_'+k)) {
+						var relevancia = -1;
+						var words = query.split(' ');
+						
+						/* Buscamos cada palabra de búsqueda en los nombres y enlaces,
+							confeccionando una medida de la relevancia de cada uno a
+						partir del lugar de aparición de lo buscado                 */
+						
+						var rel_name = -1;
+						var rel_url = -1;
+						var todas_coinciden = true;
+						
+						for (var l = 0; l < words.length && todas_coinciden; l++) {
+							var this_word = words[l];
+							
+							if (this_word != "") {
+								var n_r = l_name.toLowerCase().search(this_word);
+								var l_r = l_url.search(this_word);
+								todas_coinciden = n_r > -1 || l_r > -1;
+								
+								if (n_r > -1) {
+									if (rel_name == -1)
+									rel_name = 0;
+									
+									rel_name = rel_name + n_r;
+								}
+								if (l_r > -1) {
+									if (rel_url == -1)
+									rel_url = 0;
+									
+									rel_url = rel_url + l_r;
+								}
+							}
+						}
+						
+						if (todas_coinciden) {
+							any_link_in_tower = true;
+							any_link_in_section = true;
+							
+							var relevancia = 0;
+							var penalizacion = 8;
+							
+							if (rel_url == -1) {
+								relevancia += penalizacion;
+							} else {
+								relevancia += rel_url;
+							}
+							
+							if (rel_name == -1) {
+								relevancia += penalizacion;
+							} else {
+								relevancia += rel_name;
+							}
+							
+							//$('#l'+i+'_'+j+'_'+k).style.display = 'block';
+							
+							var obj_encontrado = {
+								name: l_name,
+								href: this_section[links][k][href],
+								url: l_url,
+								from: this_tower[name]
+							};
+							
+							// Por terminar aún...
+							if (relevancia < min_relev) {
+								search.best.unshift(obj_encontrado);
+								
+								if (search.best.length > 3) {
+									search.best.pop();
+								}
+							} else if (search.best.length < 3) {
+								search.best.push(obj_encontrado);
+								
+								min_relev = relevancia < min_relev || min_relev == -1 ? relevancia : min_relev;
+							}
+							
+							// Ordenar los resultados más relevantes, eliminar
+							// los menos relevantes, dejando solo 3.
+						} else {
+							//$('#l'+i+'_'+j+'_'+k).style.display = 'none';
+							// Hacemos invisible el enlace
+							removed_list += '#l'+i+'_'+j+'_'+k+', ';
+						}
+					}	
+				}
+				
+				if (!any_link_in_section) {
+					removed_list += '#section_'+i+'_'+j+', ';
+				}
+			}
+			
+			if (!any_link_in_tower) {
+				removed_list += '#tower_'+i+', ';
+			} else {
+				no_coincidences = false;
+			}
+		}
+		
+		var besthtml = "";
+		
+		if (no_coincidences) {
+			//$("#bookmarks h1").classList.add("no-results");
+		} else {
+			for (var i in search.best) {
+				var bk = search.best[i]
+				besthtml += '<a href="' + bk.href + '" style="background-image: url(chrome://favicon/' + bk.href + ');">' + bk.name + '<span class="from"> in ' + bk.from + '</span><span class="url">' + bk.url + '</span></a>'
+			}
+		}
+		
+		removed_list += "dummy { display: none !important; }";
+		
+		if (!$('#search_css')) {
+			var n_style = document.createElement('style');
+			n_style.id = "search_css";
+			$('body').appendChild(n_style);
+		}
+		$('#search_css').innerHTML = removed_list;
+		
+		this.displayResults(besthtml);
+	}
+});
  
 var bookmarks = {
 	ProcessSection: function(section, path) {

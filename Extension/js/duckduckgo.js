@@ -1,9 +1,9 @@
-search.lenses.duckduckgo = new Lens(
-	"duckduckgo",
-	"http://api.duckduckgo.com/?&format=json&q=",
-	"Answers",
-	"puzzle-piece",
-	function(content) {
+search.lenses.duckduckgo = new Lens({
+	id: "duckduckgo",
+	url: "http://api.duckduckgo.com/?&format=json&q=",
+	name: "Answers",
+	icon: "puzzle-piece",
+	generateAnswer: function(content) {
 		content = JSON.parse(content);
 		var resultado = false;
 		var def_link = false;
@@ -41,7 +41,7 @@ search.lenses.duckduckgo = new Lens(
 		if (content.Answer != "") {
 			var ans = document.createElement('div');
 			ans.classList.add('answer');
-			//ans.innerHTML = content.Answer.split('">')[1].split('</a>')[0].replace(/,/g, "");
+			ans.innerHTML = content.Answer.split('">')[1].split('</a>')[0].replace(/,/g, "");
 			ans.innerHTML = content.Answer;
 			ddgl.appendChild(ans);
 			
@@ -58,8 +58,8 @@ search.lenses.duckduckgo = new Lens(
 			def_link = true;
 		}
 		
-		if (resultado) ddgl.innerHTML += '<div id="ddg_banner">Instant answers powered by <a href="https://duckduckgo.com">DuckDuckGo</a>.</div>';
+		//if (resultado) ddgl.innerHTML += '<div id="ddg_banner">Instant answers powered by <a href="https://duckduckgo.com">DuckDuckGo</a>.</div>';
 		
 		return ddgl.innerHTML;
 	}
-);
+});

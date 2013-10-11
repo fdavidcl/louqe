@@ -1,8 +1,10 @@
-search.lenses.youtube = new Lens(
-	"youtube",	"https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&type=video&videoDefinition=any&videoEmbeddable=any&key=AIzaSyCZzbZYrl0q_DifacgL__oJMcSRLfR8qsY&maxResults=8&q=",
-	"Videos",
-	"youtube-play",
-	function(response) {
+search.lenses.youtube = new Lens({
+	id: "youtube",
+	url: "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&type=video&videoDefinition=any&videoEmbeddable=any&key=AIzaSyCZzbZYrl0q_DifacgL__oJMcSRLfR8qsY&maxResults=8&q=",
+	name: "Videos",
+	icon: "youtube-play",
+	delay: 1000,
+	generateAnswer: function(response) {
 		response = JSON.parse(response);
 		var vidhtml = "";
 		
@@ -16,6 +18,5 @@ search.lenses.youtube = new Lens(
 		}
 		
 		return vidhtml;
-	},
-	1000
-);
+	}
+});

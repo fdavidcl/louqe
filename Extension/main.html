@@ -10,10 +10,10 @@
 		
 		<!--script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script-->
 		<script type="text/javascript" src="js/main.js"></script>
-		<script type="text/javascript" src="js/bookmarks.js"></script>
 		<script type="text/javascript" src="js/widgets.js"></script>
 		<script type="text/javascript" src="js/search.js"></script>
 		<script type="text/javascript" src="js/lenses.js"></script>
+		<script type="text/javascript" src="js/bookmarks.js"></script>
 		<script type="text/javascript" src="js/duckduckgo.js"></script>
 		<script type="text/javascript" src="js/flickr.js"></script>
 		<script type="text/javascript" src="js/lastfm.js"></script>
@@ -21,26 +21,28 @@
 		<!--script type="text/javascript" src="js/wolframalpha.js"></script-->
 	</head>
 	<body>
-		<!--
-			Estructura básica de la página de Nueva pestaña.
-			Todo el contenido es creado dinámicamente desde los
-			archivos Javascript correspondientes.
-		-->
-		<div id="window_space"></div>
-		<div id="main" class="wrapper">
-			<section class="side">
-				<!--div id="search"-->
+		<!--div id="window_space"></div-->
+		<!--div id="start" class="wrapper">
+			<nav>
+				
+			</nav>
+			<section id="icons" class="section start">
+				<a id="settings_launcher" href="#settings/icons" title="Edit preferences"><i class="icon-pencil"></i></a>
+				
+				<!-- Speed Dial >
+				<div id="speeddial">
+					<div id="dial_container"></div>
+				</div>
+			</section>
+		</div-->
+		<div id="search" class="wrapper">
+			<nav>
 				<form id="search_form">
 					<input type="search" id="search_input" autocomplete="off" />
 					<input type="submit" />
 				</form>
 				<div class="options">
 					<a href="#search/everything"><i class="icon-reorder"></i>Everything</a>
-					<a href="#search/duckduckgo"><i class="icon-comment"></i>Answers</a>
-					<a href="#search/bookmarks"><i class="icon-bookmark"></i>Bookmarks</a>
-					<a href="#search/flickr"><i class="icon-picture"></i>Photos</a>
-					<a href="#search/lastfm"><i class="icon-music"></i>Songs</a>
-					<a href="#search/youtube"><i class="icon-youtube-play"></i>Videos</a>
 				</div>
 					<div id="search_output" class="options">
 						<div id="go_o" class="instant"></div>
@@ -55,33 +57,33 @@
 						</div>
 					</div>
 				<!--/div-->
-			</section>
+			</nav>
 			
-			<section class="start" id="everything">
+			<section id="start" class="section start">
 				<a id="settings_launcher" href="#settings/icons" title="Edit preferences"><i class="icon-pencil"></i></a>
-			
+				
 				<!-- Speed Dial -->
 				<div id="speeddial">
 					<div id="dial_container"></div>
 				</div>
 			</section>
-			<section class="section" id="search_results">
-				<div id="bookmarks">
-					<!-- Filtered bookmarks -->
-				</div>
+			<section class="search-results" id="everything">
+				<span class="instant"></span>
+			</section>
+			<section class="search-results" id="bookmarks">
 			</section>
 		</div>
 		<div id="settings" class="wrapper">
-			<section class="side">
+			<nav>
 				<div class="options">
-					<a href="#main"><i class="icon-chevron-left"></i>Back</a>
+					<a href="#"><i class="icon-chevron-left"></i>Back</a>
 					<a href="#settings/icons"><i class="icon-ellipsis-horizontal"></i>Speed dial</a>
 					<a href="#settings/wallpaper"><i class="icon-picture"></i>Wallpaper</a>
-					<a href="#settings/search"><i class="icon-search"></i>Search engines</a>
+					<a href="#settings/lenses"><i class="icon-search"></i>Lenses</a>
 					<a href="#settings/about"><i class="icon-question"></i>About Louqe</a>
 				</div>
-			</section>
-			<section class="section" id="icons">
+			</nav>
+			<section id="icons">
 				<h1>Speed dial</h1>
 				<div id="current_dial"></div>
 				<h1>Add icon</h1>
@@ -95,16 +97,16 @@
 					<input type="submit" />
 				</form>
 			</section>
-			<section class="section" id="wallpaper">
+			<section id="wallpaper">
 				<h1>Wallpaper</h1>
 				
 				<form id="wallpaper_settings"></form>
 			</section>
-			<section class="section" id="search">
-				<h1>Search engines</h1>
+			<section id="lenses">
+				<h1>Lenses</h1>
 				
 			</section>
-			<section class="section" id="about">
+			<section id="about">
 				<h1>About Louqe</h1>
 				<div class="logo">louqe <span class="version">0.1</span></div>
 				<p>Created by <a href="http://twitter.com/fdavidcl">David Charte</a></p>

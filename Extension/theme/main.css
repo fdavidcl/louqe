@@ -128,7 +128,7 @@ a {
 .wrapper.displayed {
 	display: block;
 }
-	.side {
+	nav {
 		position: fixed;
 		left: 0;
 		top: 0;
@@ -138,10 +138,10 @@ a {
 		background: rgba(0,0,0,0.45);
 		-webkit-transition: background .2s ease;
 	}
-	#main .side {
+	#search nav {
 		background: transparent;
 	}
-	body.search_mode #main .side {
+	body.search_mode #search nav {
 		background: rgba(0,0,0,0.45);
 	}
 		#search {
@@ -165,13 +165,23 @@ a {
 			#search_form [type="submit"] {
 				display: none;
 			}
-			.side .options {
+			nav .options {
 				overflow: hidden;
 			}
-			.side .options:first-child {
+			nav .options:first-child {
 				padding-top: 20px;
 			}
-				.side .options a {
+			#search nav .options {
+				opacity: 0;
+				height: 0;
+				overflow: hidden;
+				-webkit-transition: opacity .2 ease;
+			}
+			body.search_mode #search nav .options {
+				opacity: 1;
+				height: auto;
+			}
+				nav .options a {
 					display: block;
 					color: white;
 					text-decoration: none;
@@ -183,30 +193,30 @@ a {
 					text-overflow: ellipsis;
 					white-space: nowrap;
 				}
-					.side .options a .from {
+					nav .options a .from {
 						font-size: smaller;
 						color: #aaa;
 					}
-					.side .options a .url {
+					nav .options a .url {
 						display: block;
 						font-size: smaller;
 						color: #ccc;
 					}
-				.side .options a[href]:hover {
+				nav .options a[href]:hover {
 					background-color: rgba(0,0,0,0.3);
 				}
-					.side .options a[href]:hover .url {
+					nav .options a[href]:hover .url {
 						acolor: #aaa;
 						atext-decoration: underline;
 					}
-				.side .options a[href].highlight {
+				nav .options a[href].highlight {
 					background-color: #07a;
 				}
-					.side .options a[href].highlight .url {
+					nav .options a[href].highlight .url {
 						acolor: #2ac;
 						atext-decoration: underline;
 					}
-				.side .options a i {
+				nav .options a i {
 					display: inline-block;
 					width: 1em;
 					margin-right: 1em;
@@ -224,12 +234,12 @@ a {
 					color: #d0d0d0;
 				}
 				
-			body:not(.search_mode) #main .side .options, body:not(.search_mode) #search_results .instant {
+			body:not(.search_mode) #main nav .options, body:not(.search_mode) .search-results .instant {
 				opacity: 0;
 				height: 0;
 				overflow: hidden;
 			}
-		.start {
+		.wrapper section.start {
 			position: absolute;
 			top: 80px;
 			left: 0;
@@ -237,9 +247,10 @@ a {
 			bottom: 0;
 			margin: 0 auto 0;
 			text-align: center;
-			-webkit-perspective: 1720;
+			min-height: 0;
 			-webkit-transition: opacity .5s ease;
 			z-index: 10;
+			background: transparent;
 		}
 		body.search_mode .start {
 			opacity: 0;
@@ -250,7 +261,7 @@ a {
 			#settings_launcher {
 				position: fixed;
 				right: 20px;
-				top: -60px;
+				top: 20px;
 				padding: 4px 10px;
 				
 				font-size: 20px;
@@ -351,7 +362,7 @@ a {
 				}
 				.start #speeddial a img {
 				}
-.section {
+.wrapper section {
 	display: none;
 	position: absolute;
 	right: 0;
@@ -362,43 +373,22 @@ a {
 	
 	background: rgba(0,0,0,0.7);
 }
-.section.displayed {
+.wrapper section.displayed {
 	display: block;
 }
-#search_results {
-	display: block;
-	
+.search-results {
 	background: transparent;
 	opacity: 0;
 	-webkit-transition: background 0 ease .2s, opacity .15s linear;
 }
-body.search_mode #search_results {
+body.search_mode .search-results {
 	background: rgba(0,0,0,0.7);
 	opacity: 1;
 	-webkit-transition: background .2s ease, opacity 0s linear;
 }
-	.section h1 {
+	.wrapper section h1 {
 		font-weight: 300;
 		padding: 0;
-	}
-	.section h1.no-results:after {
-		content: 'No results';
-		padding: 2px 6px;
-		margin-left: 10px;
-		vertical-align: middle;
-		
-		text-transform: uppercase;
-		font-size: 14px;
-		background: rgba(70,70,70,0.5);
-	}
-	.section h1.load-results:after {
-		content: '·';
-		margin-left: 10px;
-		
-		font-size: 18px;
-		font-weight: bold;
-		-webkit-animation: pulse 1.5s ease;
-		-webkit-animation-iteration-count: infinite;
 	}
 	@-webkit-keyframes pulse {
 		0% {opacity: 0.0; margin-left: 10px;}
@@ -407,7 +397,7 @@ body.search_mode #search_results {
 	}
 	
 	/** Duckduckgo, Flickr, Last.fm, Youtube, WolframAlpha **/
-	.section#search_results .instant {
+	.wrapper section.search-results .instant {
 		display: block;
 		padding-left: 10px;
 		margin: 20px 0 20px 22px;
@@ -416,11 +406,32 @@ body.search_mode #search_results {
 		
 		-webkit-transition: opacity .2s ease;
 	}
-		.section .lens-icon {
+		.wrapper section .lens-icon {
 			position: absolute;
 			margin-left: -36px;
 		}
-		.section .instant>a, .section .instant>.answer {
+		.wrapper section .lens-icon.no-results:after {
+			content: 'No results';
+			padding: 2px 6px;
+			margin-left: 20px;
+			
+			text-transform: uppercase;
+			font-size: 14px;
+			font-family: Open Sans, 'Open Sans', Segoe UI, Tahoma, Helvetica, sans-serif;
+			background: rgba(70,70,70,0.5);
+		}
+		.wrapper section .lens-icon.loading-lens:after {
+			content: '·';
+			padding-left: 10px;
+			display: inline-block;
+			
+			font-size: 18px;
+			font-weight: bold;
+			font-family: Open Sans, 'Open Sans', Segoe UI, Tahoma, Helvetica, sans-serif;
+			-webkit-animation: pulse 1.5s ease;
+			-webkit-animation-iteration-count: infinite;
+		}
+		.wrapper section .instant>a, .wrapper section .instant>.answer {
 			margin: 20px 0 20px;
 			display: block;
 			color: white;
@@ -429,80 +440,80 @@ body.search_mode #search_results {
 			white-space: normal;
 			-webkit-transition: background .03s ease;
 		}
-		.section .instant>a[href]:hover {
-			background: rgba(255,255,255,.2);
+		.wrapper section .instant>a[href]:hover, .wrapper section .instant>a[href].highlight {
+			background-color: rgba(255,255,255,.2);
 		}
 		#resultsduckduckgo>a {
 			padding: 10px;
 			background-color: rgba(255,255,255,.2);
 		}
-		.section .instant>.oneline.answer {
+		.wrapper section .instant>.oneline.answer {
 			margin: 6px 0;
 		}
-		.section .instant> .video.answer {
+		.wrapper section .instant> .video.answer {
 			width: 400px;
 			display: inline-block;
 			margin: 0 10px 10px 0;
 			clear: left;
 			vertical-align: top;
 		}
-		.section .instant>a[style], .section .instant>.answer[style] {
+		.wrapper section .instant>a[style], .wrapper section .instant>.answer[style] {
 			padding-left: 36px;
 			background-position: 10px center;
 			background-repeat: no-repeat;
 			background-size: 1em;
 		}
-			.section .instant > .answer h3 {
+			.wrapper section .instant > .answer h3 {
 				margin: 0 0 6px;
 				font-size: 16px;
 			}
-			.section .instant > .answer .image-answer {
+			.wrapper section .instant > .answer .image-answer {
 				display: inline-block;
 				margin: 6px 6px 6px 0;
 				padding: 4px 6px;
 				background: white;
 			}
-			.section .instant>a .album-thumbnail {
+			.wrapper section .instant>a .album-thumbnail {
 				display: inline-block;
 				width: 34px;
 				height: 34px;
 				vertical-align: middle;
 				margin-right: 10px;
 			}
-			.section .instant>a .song-name {
+			.wrapper section .instant>a .song-name {
 				font-weight: 600;
 			}
-			.section .instant> .answer .video-thumbnail {
+			.wrapper section .instant> .answer .video-thumbnail {
 				float: left;
 				margin-right: 10px;
 			}
-			.section .instant> .answer .video-author {
+			.wrapper section .instant> .answer .video-author {
 				font-size: 14px;
 				color: #d0d0d0;
 			}
-			.section .instant>a .url, .section .instant>.answer .url {
+			.wrapper section .instant>a .url, .wrapper section .instant>.answer .url {
 				margin-left: 1em;
 				opacity: .8;
 				font-size: smaller;
 			}
-			.section .instant>a .inlink_banner, .section .instant>.answer .inlink_banner {
+			.wrapper section .instant>a .inlink_banner, .wrapper section .instant>.answer .inlink_banner {
 				display: block;
 				text-align: right;
 				clear: both;
 				opacity: .8;
 				font-size: smaller;
 			}
-			.section .instant>.answer a {
+			.wrapper section .instant>.answer a {
 				color: #c0daf0;
 				text-decoration: underline;
 			}
-			.section .instant>.answer a:hover {
+			.wrapper section .instant>.answer a:hover {
 				text-decoration: none;
 			}
-		.section .instant > .photo-ribbon {
+		.wrapper section .instant > .photo-ribbon {
 			margin: 0 0 10px;
 		}
-			.section .instant > .photo-ribbon .photo {
+			.wrapper section .instant > .photo-ribbon .photo {
 				display: inline-block;
 				vertical-align: top;
 				font-size: 12px;
@@ -513,12 +524,12 @@ body.search_mode #search_results {
 				white-space: nowrap;
 				text-overflow: ellipsis;
 			}
-				.section .instant > .photo-ribbon .photo img {
+				.wrapper section .instant > .photo-ribbon .photo img {
 					width: 80px;
 					height: 80px;
 					background: #666;
 				}
-				.section .instant > .photo-ribbon .photo a {
+				.wrapper section .instant > .photo-ribbon .photo a {
 					color: white;
 				}
 		
@@ -562,14 +573,14 @@ body.search_mode #search_results {
 		#bookmarks a:hover {
 			color: #ddd;
 		}
-	body:not(.search_mode) #bookmarks, body:not(.search_mode) .section .instant {
+	body:not(.search_mode) #bookmarks, body:not(.search_mode) .wrapper section .instant {
 		opacity: 0;
 		height: 0;
 		padding: 0;
 		overflow: hidden;
 		margin-left: -10px;
 	}
-	.section form input[type="text"] {
+	.wrapper section form input[type="text"] {
 		display: block;
 		min-width: 300px;
 		margin: 6px 0;

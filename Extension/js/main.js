@@ -36,8 +36,34 @@ function AjaxRequest(url, callback) {
 	}
 }
 
-
 /*** URL hash management ***/
+var showSection = function(sectionId) {
+	var selectedSection = $("#" + sectionId);
+	
+	if (selectedSection) {
+		var selectedEnv = selectedSection.parentNode;
+		
+		if ($(".wrapper.displayed")) {
+			$(".wrapper.displayed").classList.remove("displayed");
+		}
+		if ($("section.displayed")) {
+			$("section.displayed").classList.remove("displayed");
+		}
+		
+		selectedSection.classList.add("displayed");
+		selectedEnv.classList.add("displayed");
+		
+		if (selectedEnv.querySelector("nav .highlight")) {
+			selectedEnv.querySelector("nav .highlight").classList.remove("highlight");
+		}
+		
+		var newHighlight = selectedEnv.querySelector("nav a[href='#" + selectedEnv.id + "/" + sectionId + "']");
+		if (newHighlight) {
+			newHighlight.classList.add("highlight");
+		}
+	}	
+};
+
 var gethash = function() {
 	var hash = location.hash.replace('#','');
 	
@@ -52,34 +78,24 @@ var gethash = function() {
 		env = hash.split('/')[0];
 		sec = hash.split('/')[1];
 	}
+	
 	var curenv = $(".wrapper#" + env);
 	
-	if (curenv) {
-		if ($(".wrapper.displayed")) {
-			$(".wrapper.displayed").classList.remove("displayed");
-		}
-		
-		curenv.classList.add("displayed");
-		
-		var cursec = $(".section#" + sec);
-		
-		if (sec && cursec) {
-			if ($(".section.displayed")) {
-				$(".section.displayed").classList.remove("displayed");
-				curenv.querySelector(".highlight").classList.remove("highlight");
-			}
-			
-			cursec.classList.add("displayed");
-			curenv.querySelector('.options [href="#' + env + '/' + sec).classList.add("highlight");
-		}
+	if (!sec) {
+		sec = $(".wrapper#" + env + " section").id;
 	}
 	
-	$('#search_form > input').focus();
+	location.hash = env + "/" + sec;
+	
+	showSection(sec);
+	
+	if (env == "search" && sec != "start") $("body").classList.add("search_mode");
+	
+	$('#search_form > input').focus(); // Only focuses the search input when it's displayed
 };
 
 /*** Activamos funcionalidades ***/
 window.onload = function() {
-	gethash();
 	search.Load();
 	//liveinfo.Load();
 	start.load();
@@ -87,6 +103,7 @@ window.onload = function() {
 	//icons.Load();
 	//config.Load();
 	bookmarks.Load(); // Actualizamos marcadores silenciosamente
+	gethash();
 };
 
 window.onhashchange = gethash;
