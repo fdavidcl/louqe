@@ -144,7 +144,7 @@ search.lenses.bookmarks = new Lens({
 		} else {
 			for (var i in search.best) {
 				var bk = search.best[i]
-				besthtml += '<a href="' + bk.href + '" style="background-image: url(chrome://favicon/' + bk.href + ');">' + bk.name + '<span class="from"> in ' + bk.from + '</span><span class="url">' + bk.url + '</span></a>'
+				besthtml += '<a href="' + bk.href + '" style="background-image: url(chrome://favicon/' + bk.href + ');">' + bk.name + '<span class="url">' + bk.url + '</span></a>'
 			}
 		}
 		

@@ -49,13 +49,63 @@ var start = {
 	},
 	speeddial: {
 		display: function() {
+			this.loadIcons();
+			
+			this.extractColor();
+
+			this.highlightItem(0);
+			
+			this.setEvents();
+		},
+		load: function() {
+			if (_("speeddial")) {
+				this.display();
+			}
+		
+			$("#add_icon").onclick = start.speeddial.add_icon;
+			$("#add_icon_form").onsubmit = function() { start.speeddial.add_icon() };
+		},
+		add_icon: function() {
+			event.preventDefault();
+			var name = $("#new_icon_name").value;
+			var url = $("#new_icon_url").value;
+			
+			if (url.indexOf("://") < 0) {
+				url = "http://" + url;
+			}
+			
+			if (name.length > 0 && url.length > 0) {
+				var allicons = _("speeddial") ? JSON.parse(_("speeddial")) : [];
+				
+				allicons.push([name, url]);
+				
+				_("speeddial", JSON.stringify(allicons));
+				start.speeddial.display();
+				$("#add_icon_form").reset();
+			}
+		},
+		highlighted: 0,
+		highlightItem: function(ind) {
+			var all_links = $$("#speeddial a[href]");
+			
+			if (all_links[ind]) {
+				if ($("#speeddial a.highlight")) {
+					$("#speeddial a.highlight").classList.remove("highlight");
+				}
+				all_links[ind].classList.add("highlight");
+			
+				start.speeddial.highlighted = ind;
+			}
+		},
+		/*** Retrieves icons from localStorage and displays them ***/
+		loadIcons: function() {
 			var links = JSON.parse(_("speeddial")); // List of [ "(Name)", "(URL)" ]
 			var html = "";
 			var edithtml = "";
 			
 			for (var i = 0; i < links.length; i++) {
 				var l = links[i];
-				
+
 				html += '<a href="' + l[1] + '"><span class="content">' + l[0] + '</span><span class="title"><img src="chrome://favicon/' + l[1] + '" /> ' + l[1].replace("http://","").replace("https://","") + '</span></a>';
 				edithtml += '<span class="drop-icon-here" id="drop_icon_' + i + '"></span><a draggable="true" id="dial_icon_' + i + '"><span class="content">' + l[0] + '</span><span class="title"><img src="chrome://favicon/' + l[1] + '" /> ' + l[1].replace("http://","").replace("https://","") + '</span><span class="delete-icon" id="delete_icon_' + i + '"><i class="icon-remove"></i></span></a>';
 			}
@@ -64,9 +114,46 @@ var start = {
 			
 			$("#dial_container").innerHTML = html;
 			$("#current_dial").innerHTML = edithtml;
+		},
+		/*** Extracts dominant color from favicons ***/
+		extractColor: function() {
+			var colorextractor = new ColorThief();
+			var htmllinks = $$("#dial_container a");
+
+			var highlightstyle = $("#highlightstyle") ? $("#highlightstyle") : document.createElement("style");
+			highlightstyle.id = "highlightstyle";
+			var curcolor = [0, 0, 0];
+
+			/**
+			for (var al = 0; al < htmllinks.length; ++al) {
+				var curcolor = [255, 60, 60];
+				var thisimage = htmllinks[al].querySelector("img");
+
+				try {
+					curcolor = colorextractor.getColor(thisimage);
+				} catch(e) {console.log(e)}
+
+				highlightstyle.textContent += '#dial_container a[href="' + htmllinks[al].href.replace(/\/$/, "") + '"].highlight{background: rgba(' + curcolor[0] + ', ' + curcolor[1] + ', ' + curcolor[2] + ', 0.4)!important}';
+
+				console.log("Aplicando estilo a " + al);
+			}**/
+
+			var bgimage = document.createElement("img");
+			bgimage.src = _("wallpaper_url");
+
+			bgimage.onload = function() {
+				try {
+					curcolor = colorextractor.getColor(bgimage);
+				} catch(e) {console.log(e)}
+
+				highlightstyle.textContent = 'a.highlight{background: rgba(' + curcolor[0] + ', ' + curcolor[1] + ', ' + curcolor[2] + ', 0.8)!important}';
+
+				if (!$("#highlightstyle")) $("head").appendChild(highlightstyle);
+			};
+
 			
-			if ($("#speeddial a[href]")) $("#speeddial a[href]").classList.add("highlight");
-			
+		},
+		setEvents: function() {
 			var allicons = $$("#current_dial a");
 			for (var i = 0; i < allicons.length; i++) {
 				allicons[i].ondragstart = function() {
@@ -149,47 +236,7 @@ var start = {
 					start.speeddial.display();
 				};
 			}
-		},
-		load: function() {
-			if (_("speeddial")) {
-				this.display();
-			}
-		
-			$("#add_icon").onclick = start.speeddial.add_icon;
-			$("#add_icon_form").onsubmit = function() { start.speeddial.add_icon() };
-		},
-		add_icon: function() {
-			event.preventDefault();
-			var name = $("#new_icon_name").value;
-			var url = $("#new_icon_url").value;
-			
-			if (url.indexOf("://") < 0) {
-				url = "http://" + url;
-			}
-			
-			if (name.length > 0 && url.length > 0) {
-				var allicons = _("speeddial") ? JSON.parse(_("speeddial")) : [];
-				
-				allicons.push([name, url]);
-				
-				_("speeddial", JSON.stringify(allicons));
-				start.speeddial.display();
-				$("#add_icon_form").reset();
-			}
-		},
-		highlighted: 0,
-		HighlightItem: function(ind) {
-			var all_links = $$("#speeddial a[href]");
-			
-			if (all_links[ind]) {
-				if ($("#speeddial a.highlight")) {
-					$("#speeddial a.highlight").classList.remove("highlight");
-				}
-				all_links[ind].classList.add("highlight");
-			
-				start.speeddial.highlighted = ind;
-			}
-		},
+		}
 	},
 	load: function() {
 		this.clock.load();
@@ -201,6 +248,7 @@ var start = {
 var wallpaper = {
 	load: function() {
 		var curwp = _("wallpaper_url");
+		var custom_wp = true;
 		
 		if (!curwp) {
 			curwp = "back/luminance.jpg"; // Default wallpaper
@@ -213,19 +261,40 @@ var wallpaper = {
 		
 		for (var w in list) {
 			var name = list[w];
-			
-			setwphtml += '<input type="radio" name="wp-select" class="wp-select" value="' + name + '" id="select-' + name + '" /><label for="select-' + name + '" style="background-image:url(back/' + name + '_min.jpg)">' + name + '</label>';
+			var wpurl = "back/" + name + ".jpg";
+
+			setwphtml += '<input type="radio" name="wp-select" class="wp-select"'
+
+			if (wpurl == _("wallpaper_url")) {
+				custom_wp = false;
+				setwphtml += "checked='checked'";
+			}
+
+			setwphtml += ' value="back/' + name + '.jpg" id="select-' + name + '" /><label for="select-' + name + '" style="background-image:url(back/' + name + '_min.jpg)">' + name + '</label>';
 		}
 		
 		setwphtml += '<input type="radio" name="wp-select" class="wp-select" value="custom" id="select-custom" /><label for="select-custom">custom</label><input type="text" id="custom_wp_url" placeholder="http://example.com/wallpaper.jpg" />';
 		
 		$("form#wallpaper_settings").innerHTML = setwphtml;
 		
-		$("form#wallpaper_settings").onchange = function() {
-			var newwp = $("form#wallpaper_settings input:checked").value;
-			_("wallpaper_url", "back/" + newwp + ".jpg");
-			$("body").style.backgroundImage = "url('" + _("wallpaper_url") + "')";
+		if (custom_wp) {
+			$("#select-custom").checked = "checked";
+			$("#custom_wp_url").value = _("wallpaper_url");
 		}
+
+		$("form#wallpaper_settings").onchange = function() {
+			wallpaper.save($("form#wallpaper_settings input:checked").value);
+		}
+	},
+	save: function(newwp) {
+		if (newwp == "custom") {
+			_("wallpaper_url", $("#custom_wp_url").value);
+		} else {
+			_("wallpaper_url", newwp);
+		}
+		
+		$("body").style.backgroundImage = "url('" + _("wallpaper_url") + "')";
+		start.speeddial.extractColor();
 	}
 };
 

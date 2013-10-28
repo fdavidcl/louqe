@@ -83,8 +83,18 @@ Lens.prototype.load = function() {
 };
 
 Lens.prototype.displayResults = function(response) {
-	var anshtml = this.generateAnswer(response);
+	var anslist = this.generateAnswer(response);
 	
+	var anshtml = "";
+
+	if (anslist[0].href) {
+		for (var l in anslist) {
+			anshtml += '<a href="' + anslist[l].href + '">' + anslist[l].html + '</a>';
+		}
+	} else {
+		anshtml = anslist;
+	}
+
 	var finalhtml = anshtml != "" ?
 		('<span class="instant"><i class="lens-icon icon-' + this.icon + '"></i>' + anshtml + "</span>") :
 		('<span class="instant"><i class="no-results lens-icon icon-' + this.icon + '"></i></span>');

@@ -6,17 +6,22 @@ search.lenses.lastfm = new Lens({
 	delay: 1000,
 	generateAnswer: function(response) {
 		response = JSON.parse(response);
-		var mushtml = "";
+		var lnlist = [];
 		
 		if (response.results.trackmatches.track) {
 			var songlist = response.results.trackmatches.track;
 			
 			for (var i = 0; i < songlist.length; i++) {
 				var song = songlist[i];
-				mushtml += '<a href="' + song.url + '" class="oneline answer"><img class="album-thumbnail" src="' + (song.image ? song.image[0]["#text"] : "") + '" />' + song.artist + ' - <span class="song-name">' + song.name + '</span></a>';
+				lnlist.push({
+					href: song.url,
+					html: '<img class="album-thumbnail" src="' + (song.image ? song.image[0]["#text"] : "") + '" />' + song.artist + ' - <span class="song-name">' + song.name + '</span>'
+				})
+
+				//mushtml += '<a href="' + song.url + '" class="oneline answer"><img class="album-thumbnail" src="' + (song.image ? song.image[0]["#text"] : "") + '" />' + song.artist + ' - <span class="song-name">' + song.name + '</span></a>';
 			}
 		}
 		
-		return mushtml;
+		return lnlist;
 	}
 });

@@ -282,9 +282,9 @@ var search = {
 				search.HighlightItem(search.highlighted + 1);
 			}
 		} else if (ev.keyCode == 37) {
-			start.speeddial.HighlightItem(start.speeddial.highlighted - 1);
+			start.speeddial.highlightItem(start.speeddial.highlighted - 1);
 		} else if (ev.keyCode == 39) {
-			start.speeddial.HighlightItem(start.speeddial.highlighted + 1);
+			start.speeddial.highlightItem(start.speeddial.highlighted + 1);
 		}
 	},
 	FormSubmit: function() {
