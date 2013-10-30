@@ -50,9 +50,8 @@ var start = {
 	speeddial: {
 		display: function() {
 			this.loadIcons();
+			this.loadCustomStyle();
 			
-			this.extractColor();
-
 			this.highlightItem(0);
 			
 			this.setEvents();
@@ -115,43 +114,11 @@ var start = {
 			$("#dial_container").innerHTML = html;
 			$("#current_dial").innerHTML = edithtml;
 		},
-		/*** Extracts dominant color from favicons ***/
-		extractColor: function() {
-			var colorextractor = new ColorThief();
-			var htmllinks = $$("#dial_container a");
-
+		loadCustomStyle: function() {
 			var highlightstyle = $("#highlightstyle") ? $("#highlightstyle") : document.createElement("style");
-			highlightstyle.id = "highlightstyle";
-			var curcolor = [0, 0, 0];
-
-			/**
-			for (var al = 0; al < htmllinks.length; ++al) {
-				var curcolor = [255, 60, 60];
-				var thisimage = htmllinks[al].querySelector("img");
-
-				try {
-					curcolor = colorextractor.getColor(thisimage);
-				} catch(e) {console.log(e)}
-
-				highlightstyle.textContent += '#dial_container a[href="' + htmllinks[al].href.replace(/\/$/, "") + '"].highlight{background: rgba(' + curcolor[0] + ', ' + curcolor[1] + ', ' + curcolor[2] + ', 0.4)!important}';
-
-				console.log("Aplicando estilo a " + al);
-			}**/
-
-			var bgimage = document.createElement("img");
-			bgimage.src = _("wallpaper_url");
-
-			bgimage.onload = function() {
-				try {
-					curcolor = colorextractor.getColor(bgimage);
-				} catch(e) {console.log(e)}
-
-				highlightstyle.textContent = 'a.highlight{background: rgba(' + curcolor[0] + ', ' + curcolor[1] + ', ' + curcolor[2] + ', 0.8)!important}';
-
-				if (!$("#highlightstyle")) $("head").appendChild(highlightstyle);
-			};
-
-			
+			var savedstyle = _("highlightcss");
+			highlightstyle.textContent = savedstyle;
+			$("head").appendChild(highlightstyle);
 		},
 		setEvents: function() {
 			var allicons = $$("#current_dial a");
@@ -251,7 +218,7 @@ var wallpaper = {
 		var custom_wp = true;
 		
 		if (!curwp) {
-			curwp = "back/luminance.jpg"; // Default wallpaper
+			this.save("back/luminance.jpg"); // Default wallpaper
 		}
 		
 		$("body").style.backgroundImage = "url('" + _("wallpaper_url") + "')";
@@ -286,6 +253,40 @@ var wallpaper = {
 			wallpaper.save($("form#wallpaper_settings input:checked").value);
 		}
 	},
+	/*** Extracts dominant color from wallpaper ***/
+	extractColor: function() {
+		var colorextractor = new ColorThief();
+		var htmllinks = $$("#dial_container a");
+
+		var highlightstyle = "";
+		var curcolor = [0, 0, 0];
+		var textcolor = 255;
+
+		var bgimage = document.createElement("img");
+		bgimage.src = _("wallpaper_url");
+
+		bgimage.onload = function() {
+			try {
+				curcolor = colorextractor.getColor(bgimage);
+			} catch(e) {console.log(e)}
+
+
+			if ((curcolor[0] + curcolor[1] + curcolor[2])/3 > 125)
+				textcolor = 0;
+
+			textcolor = [textcolor, textcolor, textcolor].join(",");
+
+			highlightstyle = 
+				'a.highlight { background-color: rgba(' + curcolor[0] + ', ' + curcolor[1] + ', ' + curcolor[2] + ', 0.8)!important; color:rgb(' + textcolor + ') !important; }\
+				#speeddial a.highlight { box-shadow: 0 0 1px rgba(' + textcolor + ',.6)!important; }\
+				#settings_launcher{ color: rgb(' + textcolor + ') !important }\
+				#start_clock .time{ color: rgba(' + textcolor + ', 0.3) }\
+				#start_clock .date{color: rgba(' + textcolor + ', 0.7) }';
+
+			_("highlightcss", highlightstyle);
+			start.speeddial.loadCustomStyle();
+		};
+	},
 	save: function(newwp) {
 		if (newwp == "custom") {
 			_("wallpaper_url", $("#custom_wp_url").value);
@@ -294,7 +295,8 @@ var wallpaper = {
 		}
 		
 		$("body").style.backgroundImage = "url('" + _("wallpaper_url") + "')";
-		start.speeddial.extractColor();
+
+		this.extractColor();
 	}
 };
 

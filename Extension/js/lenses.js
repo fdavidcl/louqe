@@ -87,7 +87,7 @@ Lens.prototype.displayResults = function(response) {
 	
 	var anshtml = "";
 
-	if (anslist[0].href) {
+	if (!(typeof anslist == "string")) {
 		for (var l in anslist) {
 			anshtml += '<a href="' + anslist[l].href + '">' + anslist[l].html + '</a>';
 		}
