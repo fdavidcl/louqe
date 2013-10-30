@@ -85,22 +85,28 @@ Lens.prototype.load = function() {
 Lens.prototype.displayResults = function(response) {
 	var anslist = this.generateAnswer(response);
 	
-	var anshtml = "";
+	var anshtml = [];
 
 	if (!(typeof anslist == "string")) {
 		for (var l in anslist) {
-			anshtml += '<a href="' + anslist[l].href + '">' + anslist[l].html + '</a>';
+			anshtml.push('<a href="' + anslist[l].href + '">' + anslist[l].html + '</a>');
 		}
 	} else {
-		anshtml = anslist;
+		anshtml.push(anslist);
 	}
 
-	var finalhtml = anshtml != "" ?
-		('<span class="instant"><i class="lens-icon icon-' + this.icon + '"></i>' + anshtml + "</span>") :
+	var longhtml = anshtml[0] != "" ?
+		('<span class="instant"><i class="lens-icon icon-' + this.icon + '"></i>' + anshtml.join("") + "</span>") :
+		('<span class="instant"><i class="no-results lens-icon icon-' + this.icon + '"></i></span>');
+
+	var brieflist = anshtml.slice(0,3);
+	brieflist.push('<a href="#search/' + this.id + '" class="more-answers">More</a>');
+	var briefhtml = anshtml[0] != "" ?
+		('<span class="instant"><i class="lens-icon icon-' + this.icon + '"></i>' + brieflist.join("") + "</span>") :
 		('<span class="instant"><i class="no-results lens-icon icon-' + this.icon + '"></i></span>');
 		
-	this.ans.innerHTML = finalhtml;
-	this.brief.innerHTML = finalhtml;
+	this.ans.innerHTML = longhtml;
+	this.brief.innerHTML = briefhtml;
 	
 	if (search.highlighted == 0) search.HighlightItem(0);
 };

@@ -266,6 +266,7 @@ var search = {
 				$("#everything a.highlight").classList.remove("highlight");
 			}
 			all_links[ind].classList.add("highlight");
+			all_links[ind].scrollIntoView(false);
 		
 			search.highlighted = ind;
 		}
