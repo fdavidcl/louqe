@@ -260,15 +260,18 @@ var search = {
 		}
 	},
 	HighlightItem: function(ind) {
-		var all_links = $$("#everything .instant a[href]");
-		if (all_links[ind]) {
-			if ($("#everything a.highlight")) {
-				$("#everything a.highlight").classList.remove("highlight");
+		var env = $("section.displayed");
+		if (env) {
+			var all_links = env.querySelectorAll("a[href]");
+			if (all_links[ind]) {
+				if (env.querySelector("a.highlight")) {
+					env.querySelector("a.highlight").classList.remove("highlight");
+				}
+				all_links[ind].classList.add("highlight");
+				all_links[ind].scrollIntoView(false);
+			
+				search.highlighted = ind;
 			}
-			all_links[ind].classList.add("highlight");
-			all_links[ind].scrollIntoView(false);
-		
-			search.highlighted = ind;
 		}
 	},
 	HighlightByKey: function(ev) {
@@ -289,10 +292,11 @@ var search = {
 		}
 	},
 	FormSubmit: function() {
+		var env = $("section.displayed");
 		if ($("body.search_mode")) {
-			if ($("#everything .instant a.highlight")) {
+			if (env.querySelector("a.highlight")) {
 				event.preventDefault();
-				document.location.href = $("#everything .instant a.highlight").href;
+				document.location.href = env.querySelector("a.highlight").href;
 			}
 		} else if ($("#speeddial a.highlight")) {
 			event.preventDefault();
