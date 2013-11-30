@@ -433,7 +433,8 @@ body.search_mode .search-results {
 			-webkit-animation-iteration-count: infinite;
 		}
 		.wrapper section .instant>a, .wrapper section .instant>.answer {
-			margin: 20px 0 20px;
+			margin: 0px 0;
+			padding: 4px 10px;
 			display: block;
 			color: white;
 			text-decoration: none;
@@ -451,7 +452,7 @@ body.search_mode .search-results {
 		.wrapper section .instant>.oneline.answer {
 			margin: 6px 0;
 		}
-		.wrapper section .instant> .video.answer {
+		.wrapper section .instant> .bigthumb.answer {
 			width: 400px;
 			display: inline-block;
 			margin: 0 10px 10px 0;
@@ -484,11 +485,12 @@ body.search_mode .search-results {
 			.wrapper section .instant>a .song-name {
 				font-weight: 600;
 			}
-			.wrapper section .instant> .answer .video-thumbnail {
+			.wrapper section .instant> .bigthumb.answer img {
 				float: left;
 				margin-right: 10px;
+				max-height: 90px;
 			}
-			.wrapper section .instant> .answer .video-author {
+			.wrapper section .instant> .bigthumb.answer .author {
 				font-size: 14px;
 				color: #d0d0d0;
 			}

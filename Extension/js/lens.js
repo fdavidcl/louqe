@@ -1,5 +1,8 @@
 
 /*** Lens Prototype ***/
+/* Each lens is a different way of looking for results,
+   from different origins
+*/
 
 /*
 	Obligatory parameters: id, url*
@@ -69,7 +72,7 @@ function Lens(options) {
 	this.brief.className = "brief";
 	
 	// <a href="#search/duckduckgo"><i class="icon-comment"></i>Answers</a>
-	this.link = document.createElement
+	// this.link = document.createElement
 	
 	this.lastquery = "";
 }
@@ -89,7 +92,7 @@ Lens.prototype.displayResults = function(response) {
 
 	if (!(typeof anslist == "string")) {
 		for (var l in anslist) {
-			anshtml.push('<a href="' + anslist[l].href + '">' + anslist[l].html + '</a>');
+			anshtml.push('<a href="' + anslist[l].href + '" class="' + anslist[l].class + ' answer">' + anslist[l].html + '</a>');
 		}
 	} else {
 		anshtml.push(anslist);
@@ -99,8 +102,10 @@ Lens.prototype.displayResults = function(response) {
 		('<span class="instant"><i class="lens-icon icon-' + this.icon + '"></i>' + anshtml.join("") + "</span>") :
 		('<span class="instant"><i class="no-results lens-icon icon-' + this.icon + '"></i></span>');
 
-	var brieflist = anshtml.slice(0,3);
-	brieflist.push('<a href="#search/' + this.id + '" class="more-answers">More</a>');
+	var brieflist = anshtml.slice(0,4);
+	if (anshtml.length > 4)
+		brieflist.push('<a href="#search/' + this.id + '" class="more-answers">More</a>');
+	
 	var briefhtml = anshtml[0] != "" ?
 		('<span class="instant"><i class="lens-icon icon-' + this.icon + '"></i>' + brieflist.join("") + "</span>") :
 		('<span class="instant"><i class="no-results lens-icon icon-' + this.icon + '"></i></span>');

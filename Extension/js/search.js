@@ -88,7 +88,7 @@ var search = {
 				search.lenses[e].query(encodeURIComponent(orig_query));
 			}
 			
-			search.best = [];
+			/*search.best = [];
 			var min_relev = -1;
 			
 			var removed_list = "";
@@ -112,7 +112,7 @@ var search = {
 							
 							/* Buscamos cada palabra de búsqueda en los nombres y enlaces,
 							   confeccionando una medida de la relevancia de cada uno a
-							   partir del lugar de aparición de lo buscado                 */
+							   partir del lugar de aparición de lo buscado                 /
 							
 							var rel_name = -1;
 							var rel_url = -1;
@@ -216,7 +216,7 @@ var search = {
 				n_style.id = "search_css";
 				$('body').appendChild(n_style);
 			}
-			$('#search_css').innerHTML = removed_list;
+			$('#search_css').innerHTML = removed_list;*/
 			
 			var html_out = "";
 			
@@ -227,7 +227,7 @@ var search = {
 				if (location.hash == "#search/start") location.hash = "#search/everything";
 				$("body").classList.add("search_mode");
 			
-				// Mejores resultados de marcadores
+				/* Mejores resultados de marcadores
 				var mejores = "";
 				if (search.best.length > 0) {
 					var tope = search.best.length;
@@ -242,19 +242,19 @@ var search = {
 					}
 				}
 				
-				html_out += mejores;
+				html_out += mejores;*/
 			}
 			
 			// Buscadores
-			var search_html = "";
+			/*var search_html = "";
 			
 			for (i in search.engines) {
 				engine = search.engines[i];
 				
 				search_html += '<a href="' + engine.url.left + encodeURIComponent(orig_query) + engine.url.right + '" style="background-image: url(' + engine.favicon + ')" class="search-item"><i class="icon-search icon-small"></i>' + engine.name + '</a>';
-			}
+			}*/
 			
-			$('#bookmarks_o').innerHTML = html_out;
+			//$('#bookmarks_o').innerHTML = html_out;
 			$('#engines_o').innerHTML = search_html;
 			search.HighlightItem(0);
 		}
@@ -268,7 +268,11 @@ var search = {
 					env.querySelector("a.highlight").classList.remove("highlight");
 				}
 				all_links[ind].classList.add("highlight");
-				all_links[ind].scrollIntoView(false);
+
+				//if (all_links[ind].offsetTop > window.scrollHeight)
+				//	window.scrollBy(0, all_links[ind].offsetTop);
+
+				all_links[ind].scrollIntoViewIfNeeded();
 			
 				search.highlighted = ind;
 			}

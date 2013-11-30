@@ -284,7 +284,7 @@ var bookmarks = {
 		this.LoadImport();
 	},
 	Display: function() {
-		var lim = this.towers.length;
+		/*var lim = this.towers.length;
 		
 		var sections = 1, links = 1, href = 1, name = 0;
 		
@@ -329,6 +329,6 @@ var bookmarks = {
 			
 		}
 		
-		$('#bookmarks').innerHTML = bkhtml;
+		$('#bookmarks').innerHTML = bkhtml;*/
 	}
 };
