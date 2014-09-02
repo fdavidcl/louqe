@@ -93,6 +93,8 @@ var gethash = function() {
 	if (env == "search" && sec != "start") $("body").classList.add("search_mode");
 	
 	$('#search_form > input').focus(); // Only focuses the search input when it's displayed
+
+	//search.HighlightItem(0);
 };
 
 /*** Activamos funcionalidades ***/

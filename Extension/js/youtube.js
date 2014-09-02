@@ -6,14 +6,18 @@ search.lenses.youtube = new Lens({
 	delay: 1000,
 	generateAnswer: function(response) {
 		response = JSON.parse(response);
-		var vidhtml = "";
+		var vidhtml = [];
 		
 		if (response.items.length > 0) {
 			var vidlist = response.items;
 			
 			for (var i = 0; i < vidlist.length; i++) {
 				var video = vidlist[i];
-				vidhtml += '<a href="http://www.youtube.com/watch?v=' + video.id.videoId + '" class="video answer"><img class="video-thumbnail" src="' + video.snippet.thumbnails["default"].url + '" />' + video.snippet.title + '<br /><span class="video-author">' + video.snippet.channelTitle + '</span></a>';
+				vidhtml.push({
+					class: "bigthumb",
+					href: "http://www.youtube.com/watch?v=" + video.id.videoId,
+					html: '<img class="thumbnail" src="' + video.snippet.thumbnails["default"].url + '" />' + video.snippet.title + '<br /><span class="author">' + video.snippet.channelTitle + '</span>'
+				});
 			}
 		}
 		

@@ -13,7 +13,7 @@
 		<script type="text/javascript" src="js/main.js"></script>
 		<script type="text/javascript" src="js/widgets.js"></script>
 		<script type="text/javascript" src="js/search.js"></script>
-		<script type="text/javascript" src="js/lenses.js"></script>
+		<script type="text/javascript" src="js/lens.js"></script>
 		<script type="text/javascript" src="js/bookmarks.js"></script>
 		<script type="text/javascript" src="js/duckduckgo.js"></script>
 		<script type="text/javascript" src="js/flickr.js"></script>
@@ -22,20 +22,6 @@
 		<!--script type="text/javascript" src="js/wolframalpha.js"></script-->
 	</head>
 	<body>
-		<!--div id="window_space"></div-->
-		<!--div id="start" class="wrapper">
-			<nav>
-				
-			</nav>
-			<section id="icons" class="section start">
-				<a id="settings_launcher" href="#settings/icons" title="Edit preferences"><i class="icon-pencil"></i></a>
-				
-				<!-- Speed Dial >
-				<div id="speeddial">
-					<div id="dial_container"></div>
-				</div>
-			</section>
-		</div-->
 		<div id="search" class="wrapper">
 			<nav>
 				<form id="search_form">
@@ -45,7 +31,7 @@
 				<div class="options">
 					<a href="#search/everything"><i class="icon-reorder"></i>Everything</a>
 				</div>
-					<div id="search_output" class="options">
+					<div id="search_output" class="options hide">
 						<div id="go_o" class="instant"></div>
 						<div id="bookmarks_o" class="instant">
 							<!-- Most relevant bookmarks -->
@@ -57,7 +43,6 @@
 							<!-- Related queries -->
 						</div>
 					</div>
-				<!--/div-->
 			</nav>
 			
 			<section id="start" class="section start">
@@ -65,7 +50,7 @@
 				
 				<!-- Speed Dial -->
 				<div id="speeddial">
-					<div id="dial_container"></div>
+					<div id="dial_container"  style="text-align: left"></div>
 				</div>
 			</section>
 			<section class="search-results" id="everything">
