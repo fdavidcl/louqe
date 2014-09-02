@@ -268,7 +268,7 @@ var search = {
 					env.querySelector("a.highlight").classList.remove("highlight");
 				}
 				all_links[ind].classList.add("highlight");
-				all_links[ind].scrollIntoView(false);
+				all_links[ind].scrollIntoViewIfNeeded();
 			
 				search.highlighted = ind;
 			}
