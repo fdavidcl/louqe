@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<title>louqe</title>
+		
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="theme/font-awesome.min.css" />
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" />
+		<link rel="stylesheet" href="theme/main.css" />
+		
+		<!--script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script-->
+		<script type="text/javascript" src="lib/color-thief.js"></script>
+		<script type="text/javascript" src="js/main.js"></script>
+		<script type="text/javascript" src="js/widgets.js"></script>
+		<script type="text/javascript" src="js/search.js"></script>
+		<script type="text/javascript" src="js/lens.js"></script>
+		<script type="text/javascript" src="js/bookmarks.js"></script>
+		<script type="text/javascript" src="js/duckduckgo.js"></script>
+		<script type="text/javascript" src="js/flickr.js"></script>
+		<script type="text/javascript" src="js/lastfm.js"></script>
+		<script type="text/javascript" src="js/youtube.js"></script>
+		<!--script type="text/javascript" src="js/wolframalpha.js"></script-->
+	</head>
+	<body>
+		<div id="search" class="wrapper">
+			<nav>
+				<form id="search_form">
+					<input type="search" id="search_input" autocomplete="off" />
+					<input type="submit" />
+				</form>
+				<div class="options">
+					<a href="#search/everything"><i class="icon-reorder"></i>Everything</a>
+				</div>
+					<div id="search_output" class="options hide">
+						<div id="go_o" class="instant"></div>
+						<div id="bookmarks_o" class="instant">
+							<!-- Most relevant bookmarks -->
+						</div>
+						<div id="engines_o" class="instant">
+							<!-- Search engines -->
+						</div>
+						<div id="related_o" class="instant">
+							<!-- Related queries -->
+						</div>
+					</div>
+			</nav>
+			
+			<section id="start" class="section start">
+				<a id="settings_launcher" href="#settings/icons" title="Edit preferences"><i class="icon-pencil"></i></a>
+				
+				<!-- Speed Dial -->
+				<div id="speeddial">
+					<div id="dial_container"  style="text-align: left"></div>
+				</div>
+			</section>
+			<section class="search-results" id="everything">
+			</section>
+			<section class="search-results" id="bookmarks">
+			</section>
+		</div>
+		<div id="settings" class="wrapper">
+			<nav>
+				<div class="options">
+					<a href="#"><i class="icon-chevron-left"></i>Back</a>
+					<a href="#settings/icons"><i class="icon-ellipsis-horizontal"></i>Speed dial</a>
+					<a href="#settings/wallpaper"><i class="icon-picture"></i>Wallpaper</a>
+					<a href="#settings/lenses"><i class="icon-search"></i>Lenses</a>
+					<a href="#settings/about"><i class="icon-question"></i>About Louqe</a>
+				</div>
+			</nav>
+			<section id="icons">
+				<h1>Speed dial</h1>
+				<div id="current_dial"></div>
+				<h1>Add icon</h1>
+				
+				<form id="add_icon_form">
+					<input type="text" placeholder="Name" id="new_icon_name" />
+					<input type="text" placeholder="http://example.com" id="new_icon_url" />
+					<a href="#settings/icons" id="add_icon" class="button">
+						<i class="icon-plus"></i>Add icon
+					</a>
+					<input type="submit" />
+				</form>
+			</section>
+			<section id="wallpaper">
+				<h1>Wallpaper</h1>
+				
+				<form id="wallpaper_settings"></form>
+			</section>
+			<section id="lenses">
+				<h1>Lenses</h1>
+				
+			</section>
+			<section id="about">
+				<h1>About Louqe</h1>
+				<div class="logo">louqe <span class="version">0.1</span></div>
+				<p>Created by <a href="http://twitter.com/fdavidcl">David Charte</a></p>
+				<p>Wallpapers from <a href="http://electroqute-designs.deviantart.com/art/The-Gradient-Series-elegance-284083277">The Gradient Series</a> by <a href="http://electroqute-designs.deviantart.com/">~electroqute-designs</a>.</p>
+				<p>Using color extraction algorithm <a href="https://github.com/lokesh/color-thief">Color Thief</a> by <a href="http://www.lokeshdhakar.com/">Lokesh Dhakar</a>, distributed under <a href="http://creativecommons.org/licenses/by/2.5/">CC BY 2.5</a>.</p>
+			</section>
+		</div>
+	</body>
+</html>
